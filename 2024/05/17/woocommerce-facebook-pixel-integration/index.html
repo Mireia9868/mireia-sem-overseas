@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Mireia%20Sem_transparent.png">
+  <link rel="icon" href="/img/Mireia%20Sem_transparent.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mireia">
+  <meta name="keywords" content="SEM, Google Ads, Bing Ads, Facebook Ads, cross-border e-commerce, conversion tracking, digital advertising">
+  <meta name="description" content="Complete guide to integrating Facebook Pixel with your WooCommerce store. Learn how to create the pixel in Business Manager, install the base code, set up standard events (ViewContent, AddToCart, Purchase), and verify everything with the Pixel Helper.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="WooCommerce & Facebook Pixel Integration Guide - Mireia SEM Blog">
+  <meta property="og:site_name" content="Mireia SEM Blog">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:author" content="Mireia">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="referrer" content="no-referrer-when-downgrade">
+
+  <title>WooCommerce & Facebook Pixel Integration Guide - Mireia SEM Blog</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2.7.0/hint.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+  <link rel="stylesheet" href="/css/main.css" />
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mireiasem.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/color-schema.js"></script>
+  
+</head>
+
+<body>
+  <header>
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/"><strong>Mireia Sem Blog</strong></a>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+            <li class="nav-item"><a class="nav-link" href="/"><i class="iconfont icon-home-fill"></i> Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> Archives</a></li>
+            <li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> Categories</a></li>
+            <li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> Tags</a></li>
+            <li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> About</a></li>
+          <li class="nav-item" id="search-btn"><a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">&nbsp;<i class="iconfont icon-search"></i>&nbsp;</a></li>
+          <li class="nav-item" id="color-toggle-btn"><a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div id="banner" class="banner" parallax=true style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2"><span id="subtitle" data-typed-text="WooCommerce & Facebook Pixel Integration Guide"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  </header>
+
+  <main>
+      <div class="container nopadding-x-md">
+        <div id="board" style="margin-top: 0">
+          <div class="container">
+            <div class="row">
+
+              <div class="col-12 col-md-9 m-auto">
+                <div class="page-content">
+                  <div class="markdown-body">
+<h2 id="overview">Overview</h2>
+<p>Facebook Pixel is essential for tracking conversions from your Facebook and Instagram ad campaigns. For WooCommerce stores, proper pixel integration enables:</p>
+<ul>
+<li>Conversion tracking (purchases, add-to-cart, etc.)</li>
+<li>Audience building (remarketing to website visitors)</li>
+<li>Lookalike audience creation</li>
+<li>Conversion-optimized bidding (oCPM)</li>
+<li>Dynamic product ads (retargeting with specific products)</li>
+</ul>
+
+<h2 id="step-1-create-pixel">Step 1: Create the Facebook Pixel</h2>
+<p>You need a Facebook Business Manager account to create a pixel:</p>
+<ol>
+<li>Go to <a href="https://business.facebook.com" target="_blank" rel="noopener">business.facebook.com</a> → <strong>Events Manager</strong></li>
+<li>Click "Connect Data Source" → "Web" → "Facebook Pixel"</li>
+<li>Name your pixel (e.g., "StoreName — Main Pixel")</li>
+<li>Enter your website URL</li>
+<li>Click "Continue" — you'll receive your <strong>Pixel ID</strong> (a 15-16 digit number)</li>
+</ol>
+<p>Save your Pixel ID — you'll need it for the installation steps below.</p>
+
+<h2 id="step-2-install-base-code">Step 2: Install the Base Pixel Code</h2>
+<p>You have three options for installing the base pixel code on WooCommerce:</p>
+
+<h3 id="option-a-plugin">Option A: Using a Plugin (Recommended)</h3>
+<p>The easiest method for non-developers:</p>
+<ol>
+<li>Install the <strong>"PixelYourSite"</strong> or <strong>"Facebook for WooCommerce"</strong> plugin</li>
+<li>Go to the plugin settings</li>
+<li>Enter your Facebook Pixel ID</li>
+<li>The plugin automatically installs the base code and fires standard events on all pages</li>
+</ol>
+
+<h3 id="option-b-manual-code">Option B: Manual Code Installation</h3>
+<p>For full control over what fires where:</p>
+<ol>
+<li>In WordPress admin, go to <strong>Appearance → Theme Editor</strong></li>
+<li>Open <code>header.php</code> (or use a header injection plugin)</li>
+<li>Paste the Facebook Pixel base code right after the <code>&lt;head&gt;</code> tag:</li>
+</ol>
+<pre><code class="language-html">&lt;!-- Meta Pixel Code --&gt;
+&lt;script&gt;
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'YOUR_PIXEL_ID');
+fbq('track', 'PageView');
+&lt;/script&gt;
+&lt;noscript&gt;&lt;img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1"
+/&gt;&lt;/noscript&gt;
+&lt;!-- End Meta Pixel Code --&gt;</code></pre>
+
+<h3 id="option-c-google-tag-manager">Option C: Google Tag Manager</h3>
+<p>If you already use GTM, add the pixel as a custom HTML tag with an "All Pages" trigger. This gives you centralized tag management.</p>
+
+<h2 id="step-3-standard-events">Step 3: Set Up Standard Events</h2>
+<p>For WooCommerce, the most important standard events are:</p>
+<table>
+<thead><tr><th>Event</th><th>When to Fire</th><th>Key Parameters</th></tr></thead>
+<tbody>
+<tr><td><code>ViewContent</code></td><td>Product detail page</td><td>content_ids, content_type, value, currency</td></tr>
+<tr><td><code>AddToCart</code></td><td>When item added to cart</td><td>content_ids, content_type, value, currency</td></tr>
+<tr><td><code>InitiateCheckout</code></td><td>Checkout page load</td><td>content_ids, num_items, value, currency</td></tr>
+<tr><td><code>Purchase</code></td><td>Order confirmation page</td><td>content_ids, content_type, value, currency</td></tr>
+</tbody>
+</table>
+
+<h3 id="purchase-event-code">Purchase Event Code (for order confirmation page)</h3>
+<pre><code class="language-html">&lt;script&gt;
+fbq('track', 'Purchase', {
+  content_ids: ['product_1', 'product_2'],  // Product IDs
+  content_type: 'product',
+  value: 99.50,                              // Total order value
+  currency: 'USD'
+});
+&lt;/script&gt;</code></pre>
+
+<div class="note-tip">
+<p><strong>Pro Tip:</strong> The Purchase event with value and currency is the most critical — it powers conversion-optimized bidding and ROAS reporting. Make sure the value matches the actual order total including shipping and tax.</p>
+</div>
+
+<h2 id="step-4-advanced-matching">Step 4: Enable Advanced Matching (Optional but Recommended)</h2>
+<p>Advanced Matching sends hashed customer data (email, phone, name) with pixel events, improving match rates for custom and lookalike audiences:</p>
+<pre><code class="language-javascript">fbq('init', 'YOUR_PIXEL_ID', {
+  em: 'hashed_email',       // SHA-256 hashed email
+  ph: 'hashed_phone',       // SHA-256 hashed phone
+  fn: 'hashed_first_name',  // SHA-256 hashed first name
+  ln: 'hashed_last_name'    // SHA-256 hashed last name
+});</code></pre>
+
+<h2 id="step-5-verify">Step 5: Verify with Pixel Helper</h2>
+<ol>
+<li>Install the <a href="https://chrome.google.com/webstore/detail/meta-pixel-helper" target="_blank" rel="noopener">Meta Pixel Helper</a> Chrome extension</li>
+<li>Navigate to your WooCommerce store</li>
+<li>Visit each key page: product page, cart, checkout, order confirmation</li>
+<li>Click the Pixel Helper icon to verify each event fires correctly</li>
+<li>Check that event parameters (especially value and currency) are populated</li>
+</ol>
+
+<h2 id="step-6-capi">Step 6: Set Up Conversions API (CAPI)</h2>
+<p>The Conversions API supplements the pixel by sending data server-side, improving data reliability (especially with iOS privacy restrictions and ad blockers):</p>
+<ol>
+<li>Use the <strong>"Facebook for WooCommerce"</strong> plugin — it includes CAPI integration</li>
+<li>Or implement via the <a href="https://developers.facebook.com/docs/marketing-api/conversions-api" target="_blank" rel="noopener">Conversions API</a> directly</li>
+<li>Pair the pixel (client-side) with CAPI (server-side) for maximum data quality</li>
+</ol>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<ul>
+<li><strong>Pixel not firing:</strong> Check that the pixel ID is correct and the code is in the <code>&lt;head&gt;</code> section. Clear cache plugins.</li>
+<li><strong>Purchase event not firing:</strong> Ensure the code is on the Thank You / order confirmation page only. In WooCommerce, this is typically <code>thankyou.php</code> or the order-received endpoint.</li>
+<li><strong>Value showing as 0:</strong> Make sure you're passing the dynamic order total, not a hardcoded value.</li>
+<li><strong>Duplicate events:</strong> If using both a plugin and manual code, you'll get double-firing. Choose one method only.</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Proper Facebook Pixel integration on WooCommerce unlocks the full power of Meta advertising — from conversion tracking to audience building to dynamic product ads. Use the "Facebook for WooCommerce" plugin for the quickest setup, or implement manually for maximum control. Don't forget to add the Conversions API for maximum data reliability in the post-iOS 14.5 era.</p>
+                  </div>
+
+                  <div class="post-metas my-4">
+                    <div class="post-meta mr-3">
+                      <i class="iconfont icon-date"></i>
+                      <time datetime="2024-05-17">2024-05-17</time>
+                    </div>
+                    <div class="post-meta">
+                      <i class="iconfont icon-tags"></i>
+                      <a href="/tags/Facebook-Ads/">#Facebook Ads</a> <a href="/tags/Conversion-Tracking/">#Conversion Tracking</a> <a href="/tags/WooCommerce/">#WooCommerce</a>
+                    </div>
+                  </div>
+
+                  <hr>
+                  <div class="post-nav">
+                    <a href="/" class="post-nav-item">&larr; Back to Home</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-3 d-none d-lg-block">
+                <div class="post-toc" id="toc">
+                  <h4>Table of Contents</h4>
+                  <ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#step-1-create-pixel">Step 1: Create the Facebook Pixel</a></li>
+<li><a href="#step-2-install-base-code">Step 2: Install the Base Pixel Code</a></li>
+<li><a href="#step-3-standard-events">Step 3: Set Up Standard Events</a></li>
+<li><a href="#step-4-advanced-matching">Step 4: Enable Advanced Matching (Optional but Recommended)</a></li>
+<li><a href="#step-5-verify">Step 5: Verify with Pixel Helper</a></li>
+<li><a href="#step-6-capi">Step 6: Set Up Conversions API (CAPI)</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+            <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+            <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+
+
+    <div class="statistics">
+
+
+
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views:
+        <span id="busuanzi_value_site_pv"></span>
+
+      </span>
+
+
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors:
+        <span id="busuanzi_value_site_uv"></span>
+
+      </span>
+
+
+</div>
+
+
+
+
+</div>
+
+  </footer>
+  <!-- Scripts -->
+
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"></script>
+<script src="/js/events.js"></script>
+<script src="/js/plugins.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+        typing(text);
+    })(window, document);
+  </script>
+
+    <script src="/js/img-lazyload.js"></script>
+
+  <script src="/js/local-search.js"></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js"></script>
+  <script>anchors.add("h2,h3,h4");</script>
+
+<!-- the boot of the theme, keep it at the bottom -->
+<script src="/js/boot.js"></script>
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

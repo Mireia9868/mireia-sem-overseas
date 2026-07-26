@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Mireia%20Sem_transparent.png">
+  <link rel="icon" href="/img/Mireia%20Sem_transparent.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mireia">
+  <meta name="keywords" content="SEM, Google Ads, Bing Ads, Facebook Ads, cross-border e-commerce, conversion tracking, digital advertising">
+  <meta name="description" content="For B2B and high-consideration purchases, online conversions don't tell the full story. Learn how to use GCLID and offline conversion upload to feed your CRM data back into Google Ads, enabling smarter bidding based on actual business outcomes.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Google Ads: Offline Conversion Data Upload Guide - Mireia SEM Blog">
+  <meta property="og:site_name" content="Mireia SEM Blog">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:author" content="Mireia">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="referrer" content="no-referrer-when-downgrade">
+
+  <title>Google Ads: Offline Conversion Data Upload Guide - Mireia SEM Blog</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2.7.0/hint.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+  <link rel="stylesheet" href="/css/main.css" />
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mireiasem.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/color-schema.js"></script>
+  
+</head>
+
+<body>
+  <header>
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/"><strong>Mireia Sem Blog</strong></a>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+            <li class="nav-item"><a class="nav-link" href="/"><i class="iconfont icon-home-fill"></i> Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> Archives</a></li>
+            <li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> Categories</a></li>
+            <li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> Tags</a></li>
+            <li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> About</a></li>
+          <li class="nav-item" id="search-btn"><a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">&nbsp;<i class="iconfont icon-search"></i>&nbsp;</a></li>
+          <li class="nav-item" id="color-toggle-btn"><a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div id="banner" class="banner" parallax=true style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2"><span id="subtitle" data-typed-text="Google Ads: Offline Conversion Data Upload Guide"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  </header>
+
+  <main>
+      <div class="container nopadding-x-md">
+        <div id="board" style="margin-top: 0">
+          <div class="container">
+            <div class="row">
+
+              <div class="col-12 col-md-9 m-auto">
+                <div class="page-content">
+                  <div class="markdown-body">
+<h2 id="why-offline-conversions">Why Offline Conversion Upload?</h2>
+<p>Many businesses — especially B2B, real estate, and high-consideration purchases — generate leads online but close deals offline (via phone calls, in-person meetings, or CRM-tracked sales). Standard Google Ads conversion tracking only captures the initial online action (form submission, call), not the actual revenue.</p>
+<p><strong>Offline conversion upload</strong> bridges this gap by sending CRM-tracked conversion data back to Google Ads using the GCLID (Google Click ID). This enables:</p>
+<ul>
+<li>Bidding based on actual sales, not just leads</li>
+<li>Target ROAS (tROAS) bidding using real revenue data</li>
+<li>Smarter algorithm optimization toward high-value conversions</li>
+</ul>
+
+<h2 id="setup-overview">Setup Overview</h2>
+<p>The process has three main components:</p>
+<ol>
+<li><strong>Enable auto-tagging</strong> to capture GCLID on every ad click</li>
+<li><strong>Pass GCLID to your CRM</strong> alongside lead data</li>
+<li><strong>Upload conversion data</strong> back to Google Ads with the GCLID</li>
+</ol>
+
+<h2 id="step-1-enable-auto-tagging">Step 1: Enable Auto-Tagging to Capture GCLID</h2>
+<p>Auto-tagging automatically appends a GCLID parameter to every ad click URL. Without it, you cannot link offline conversions back to specific ad clicks.</p>
+<ol>
+<li>In Google Ads, go to <strong>Settings → Account settings</strong></li>
+<li>Check "Auto-tagging" → toggle to <strong>Enabled</strong></li>
+<li>Save changes</li>
+</ol>
+
+<div class="note-warning">
+<p><strong>Important:</strong> UTM parameters alone are not sufficient for offline conversion upload. UTM can track keyword-level data, but only GCLID can uniquely identify each click and link it to a conversion event. You must use auto-tagging + GCLID.</p>
+</div>
+
+<h2 id="step-2-capture-gclid">Step 2: Capture GCLID in Your Lead Forms</h2>
+<p>When a user clicks your ad and lands on your site, the GCLID is in the URL. You need to capture it and store it with the lead data:</p>
+<ol>
+<li>Add a hidden field to your lead forms to store the GCLID</li>
+<li>Use JavaScript to extract the GCLID from the URL and populate the hidden field</li>
+</ol>
+<pre><code class="language-javascript">// Extract GCLID from URL and populate hidden form field
+function getGclid() {
+  var w = window.location.search.substring(1);
+  var params = w.split('&');
+  for (var i = 0; i < params.length; i++) {
+    var pair = params[i].split('=');
+    if (pair[0] === 'gclid') {
+      return decodeURIComponent(pair[1]);
+    }
+  }
+  return '';
+}
+// Set on page load
+document.addEventListener('DOMContentLoaded', function() {
+  var gclidField = document.getElementById('gclid_field');
+  if (gclidField) {
+    gclidField.value = getGclid();
+  }
+});</code></pre>
+<p>Store the GCLID in your CRM alongside the lead record (e.g., as a custom field on the lead/contact object in Salesforce, HubSpot, etc.)</p>
+
+<h2 id="step-3-create-conversion-actions">Step 3: Create Conversion Actions in Google Ads</h2>
+<ol>
+<li>Go to <strong>Tools → Conversions → New conversion action</strong></li>
+<li>Select "Import → Other data sources or CRMs"</li>
+<li>Choose "Track conversions from clicks" (uses GCLID)</li>
+<li>Name your conversion (e.g., "Qualified Lead," "Closed Deal")</li>
+<li>Set category, value, and count settings</li>
+<li>Repeat for each conversion stage you want to track (lead → qualified → closed)</li>
+</ol>
+
+<h2 id="step-4-upload-conversions">Step 4: Upload Conversion Data</h2>
+<p>There are two methods for uploading offline conversions:</p>
+
+<h3 id="method-a-manual-csv-upload">Method A: Manual CSV Upload</h3>
+<p>For small volumes or testing:</p>
+<ol>
+<li>Prepare a CSV with columns: <code>Google Click ID</code>, <code>Conversion Name</code>, <code>Conversion Time</code>, <code>Conversion Value</code>, <code>Conversion Currency</code></li>
+<li>Go to <strong>Tools → Conversions → Uploads</strong></li>
+<li>Click "Upload" and select your CSV file</li>
+<li>Review the upload status for errors</li>
+</ol>
+
+<h3 id="method-b-api-upload">Method B: Google Ads API (Automated)</h3>
+<p>For production use, automate uploads via the Google Ads API:</p>
+<pre><code class="language-python"># Pseudocode for Google Ads API offline conversion upload
+from google.ads.googleads.client import GoogleAdsClient
+
+client = GoogleAdsClient.load_from_storage()
+conversion_upload_service = client.get_service("ConversionUploadService")
+
+conversion_action = client.get_service("ConversionActionService")
+conversion_action_resource = conversion_action.conversion_action_path(
+    customer_id, conversion_action_id
+)
+
+click_conversion = client.get_type("ClickConversion")
+click_conversion.gclid = "EAIaIQobChMI..."
+click_conversion.conversion_action = conversion_action_resource
+click_conversion.conversion_date_time = "2024-09-20 14:32:05+08:00"
+click_conversion.conversion_value = 1500.0
+click_conversion.currency_code = "USD"
+
+request = client.get_type("UploadClickConversionsRequest")
+request.customer_id = customer_id
+request.conversions = [click_conversion]
+
+response = conversion_upload_service.upload_click_conversions(request=request)</code></pre>
+
+<h2 id="best-practices">Best Practices</h2>
+<ul>
+<li><strong>Upload within 90 days:</strong> Google only accepts GCLID conversions within 90 days of the click</li>
+<li><strong>Use consistent naming:</strong> Match your CRM stage names with Google Ads conversion action names for easy mapping</li>
+<li><strong>Track multiple stages:</strong> Create separate conversion actions for "Lead," "Qualified," "Opportunity," and "Closed" to give the algorithm rich signal</li>
+<li><strong>Include conversion value:</strong> Revenue data enables tROAS bidding, which is far more effective than tCPA for revenue-focused campaigns</li>
+<li><strong>Upload frequently:</strong> Daily uploads provide the freshest signal. Weekly is the minimum for effective optimization</li>
+</ul>
+
+<h2 id="common-issues">Common Issues</h2>
+<ul>
+<li><strong>"GCLID not found" errors:</strong> The GCLID may be expired (90-day limit exceeded) or malformed. Check your CRM data quality.</li>
+<li><strong>Conversions not appearing in reports:</strong> Allow 3-12 hours for uploaded conversions to appear in Google Ads reports. Attribution lag settings may also delay reporting.</li>
+<li><strong>Low match rate:</strong> If many leads have empty GCLID fields, review your form implementation — ensure the hidden field is populated before form submission.</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Offline conversion upload transforms Google Ads from a lead-generation tool into a revenue-optimization platform. By feeding real business outcomes back to the algorithm, you enable smarter bidding that focuses on quality — not just quantity. The setup requires coordination between marketing and CRM teams, but the performance gains are well worth the effort.</p>
+                  </div>
+
+                  <div class="post-metas my-4">
+                    <div class="post-meta mr-3">
+                      <i class="iconfont icon-date"></i>
+                      <time datetime="2024-09-21">2024-09-21</time>
+                    </div>
+                    <div class="post-meta">
+                      <i class="iconfont icon-tags"></i>
+                      <a href="/tags/Google-Ads/">#Google Ads</a> <a href="/tags/Conversion-Tracking/">#Conversion Tracking</a> <a href="/tags/Offline-Conversions/">#Offline Conversions</a>
+                    </div>
+                  </div>
+
+                  <hr>
+                  <div class="post-nav">
+                    <a href="/" class="post-nav-item">&larr; Back to Home</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-3 d-none d-lg-block">
+                <div class="post-toc" id="toc">
+                  <h4>Table of Contents</h4>
+                  <ul>
+<li><a href="#why-offline-conversions">Why Offline Conversion Upload?</a></li>
+<li><a href="#setup-overview">Setup Overview</a></li>
+<li><a href="#step-1-enable-auto-tagging">Step 1: Enable Auto-Tagging to Capture GCLID</a></li>
+<li><a href="#step-2-capture-gclid">Step 2: Capture GCLID in Your Lead Forms</a></li>
+<li><a href="#step-3-create-conversion-actions">Step 3: Create Conversion Actions in Google Ads</a></li>
+<li><a href="#step-4-upload-conversions">Step 4: Upload Conversion Data</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#common-issues">Common Issues</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+            <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+            <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+
+
+    <div class="statistics">
+
+
+
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views:
+        <span id="busuanzi_value_site_pv"></span>
+
+      </span>
+
+
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors:
+        <span id="busuanzi_value_site_uv"></span>
+
+      </span>
+
+
+</div>
+
+
+
+
+</div>
+
+  </footer>
+  <!-- Scripts -->
+
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"></script>
+<script src="/js/events.js"></script>
+<script src="/js/plugins.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+        typing(text);
+    })(window, document);
+  </script>
+
+    <script src="/js/img-lazyload.js"></script>
+
+  <script src="/js/local-search.js"></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js"></script>
+  <script>anchors.add("h2,h3,h4");</script>
+
+<!-- the boot of the theme, keep it at the bottom -->
+<script src="/js/boot.js"></script>
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

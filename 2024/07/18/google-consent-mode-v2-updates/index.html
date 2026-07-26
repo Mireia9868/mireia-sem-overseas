@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Mireia%20Sem_transparent.png">
+  <link rel="icon" href="/img/Mireia%20Sem_transparent.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mireia">
+  <meta name="keywords" content="SEM, Google Ads, Bing Ads, Facebook Ads, cross-border e-commerce, conversion tracking, digital advertising">
+  <meta name="description" content="With GDPR and evolving privacy regulations, Google's Consent Mode has become essential. Version 2 introduces new parameters for ad user data and ad personalization. Learn how to implement it and recover up to 70% of lost conversion data through modeling.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Google Consent Mode v2: What Advertisers Need to Know - Mireia SEM Blog">
+  <meta property="og:site_name" content="Mireia SEM Blog">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:author" content="Mireia">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="referrer" content="no-referrer-when-downgrade">
+
+  <title>Google Consent Mode v2: What Advertisers Need to Know - Mireia SEM Blog</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2.7.0/hint.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+  <link rel="stylesheet" href="/css/main.css" />
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mireiasem.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/color-schema.js"></script>
+  
+</head>
+
+<body>
+  <header>
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/"><strong>Mireia Sem Blog</strong></a>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+            <li class="nav-item"><a class="nav-link" href="/"><i class="iconfont icon-home-fill"></i> Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> Archives</a></li>
+            <li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> Categories</a></li>
+            <li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> Tags</a></li>
+            <li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> About</a></li>
+          <li class="nav-item" id="search-btn"><a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">&nbsp;<i class="iconfont icon-search"></i>&nbsp;</a></li>
+          <li class="nav-item" id="color-toggle-btn"><a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div id="banner" class="banner" parallax=true style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2"><span id="subtitle" data-typed-text="Google Consent Mode v2: What Advertisers Need to Know"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  </header>
+
+  <main>
+      <div class="container nopadding-x-md">
+        <div id="board" style="margin-top: 0">
+          <div class="container">
+            <div class="row">
+
+              <div class="col-12 col-md-9 m-auto">
+                <div class="page-content">
+                  <div class="markdown-body">
+<h2 id="background">Background: Why Consent Mode Matters</h2>
+<p>The EU's General Data Protection Regulation (GDPR) and similar privacy laws worldwide have made consent management a critical requirement for digital advertising. When users decline cookie consent, traditional tracking methods fail — creating gaps in conversion data.</p>
+<p>Google's <strong>Consent Mode</strong> addresses this by adjusting how Google tags behave based on user consent status. When consent is denied, Google uses <strong>modeled conversions</strong> to estimate the missing data — recovering up to 70% of lost conversion signals.</p>
+
+<h2 id="what-is-consent-mode">What is Consent Mode?</h2>
+<p>Consent Mode is a framework that allows advertisers to indicate whether users have consented to cookies for analytics and advertising purposes. Based on this signal, Google tags adjust their behavior:</p>
+<ul>
+<li><strong>Consent granted:</strong> Normal tracking — full cookie-based measurement</li>
+<li><strong>Consent denied:</strong> Cookieless measurement — Google uses aggregated, modeled data to estimate conversions and user behavior</li>
+</ul>
+
+<h2 id="whats-new-in-v2">What's New in Consent Mode v2</h2>
+<p>Version 2 introduces two new consent parameters:</p>
+<table>
+<thead><tr><th>Parameter</th><th>Purpose</th><th>Default</th></tr></thead>
+<tbody>
+<tr><td><code>ad_user_data</code></td><td>Indicates whether user data can be sent to Google for advertising</td><td>'not set'</td></tr>
+<tr><td><code>ad_personalization</code></td><td>Indicates whether data can be used for personalized advertising</td><td>'not set'</td></tr>
+</tbody>
+</table>
+<p>These join the existing v1 parameters:</p>
+<ul>
+<li><code>ad_storage</code> — enables storage of advertising cookies</li>
+<li><code>analytics_storage</code> — enables storage of analytics cookies</li>
+<li><code>functionality_storage</code> — enables storage for site functionality</li>
+<li><code>personalization_storage</code> — enables storage for personalization</li>
+<li><code>security_storage</code> — enables storage for security</li>
+</ul>
+
+<h2 id="implementation">Implementation Guide</h2>
+
+<h3 id="option-1-consent-management-platform">Option 1: Using a Consent Management Platform (CMP)</h3>
+<p>The easiest approach is to use a Google-certified CMP that integrates natively with Consent Mode:</p>
+<ul>
+<li>Cookiebot, OneTrust, TrustArc, Usercentrics, Didomi, etc.</li>
+<li>Configure your CMP to send consent signals to the Google Data Layer</li>
+<li>The CMP automatically sets the Consent Mode parameters based on user choices</li>
+</ul>
+
+<h3 id="option-2-manual-implementation">Option 2: Manual Implementation</h3>
+<p>If you're not using a CMP, you can implement Consent Mode directly:</p>
+
+<p><strong>Step 1: Set default consent state (before tags load):</strong></p>
+<pre><code class="language-html">&lt;!-- Set default consent to denied before any Google tags --&gt;
+&lt;script&gt;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'wait_for_update': 500
+  });
+&lt;/script&gt;</code></pre>
+
+<p><strong>Step 2: Update consent when user makes a choice:</strong></p>
+<pre><code class="language-javascript">// When user grants consent
+gtag('consent', 'update', {
+  'ad_storage': 'granted',
+  'ad_user_data': 'granted',
+  'ad_personalization': 'granted',
+  'analytics_storage': 'granted'
+});
+
+// Or update specific parameters based on user choices
+// e.g., user consents to analytics but not personalization
+gtag('consent', 'update', {
+  'analytics_storage': 'granted',
+  'ad_storage': 'granted',
+  'ad_user_data': 'denied',
+  'ad_personalization': 'denied'
+});</code></pre>
+
+<div class="note-tip">
+<p><strong>Key Principle:</strong> Always set defaults to 'denied' <em>before</em> any Google tags load. Then update to 'granted' after the user consents. This ensures compliance — you never set non-essential cookies before consent is given.</p>
+</div>
+
+<h2 id="modeled-conversions">How Modeled Conversions Work</h2>
+<p>When consent is denied, Google uses machine learning to model conversions based on:</p>
+<ul>
+<li>Aggregated data from consenting users with similar behavior patterns</li>
+<li>Historical conversion data from your account</li>
+<li>Browser and device signals</li>
+<li>Time and geographic patterns</li>
+</ul>
+<p>Google reports that modeled conversions can recover up to <strong>70% of the data lost</strong> when users deny consent. This varies by industry and traffic volume — accounts with more historical data get better modeling results.</p>
+
+<h2 id="impact-on-ads">Impact on Google Ads Performance</h2>
+<ul>
+<li><strong>Bidding optimization:</strong> Smart Bidding strategies (tCPA, tROAS, Maximize Conversions) rely on conversion data. Without Consent Mode, denied-consent users create data gaps that degrade bidding performance.</li>
+<li><strong>Audience targeting:</strong> When ad_personalization is denied, users are excluded from remarketing lists and similar audiences.</li>
+<li><strong>Conversion reporting:</strong> Modeled conversions appear in your Google Ads reports alongside observed conversions, giving a more complete picture.</li>
+</ul>
+
+<h2 id="verification">Verification &amp; Monitoring</h2>
+<ol>
+<li>Use the <strong>Google Tag Assistant</strong> Chrome extension to verify consent signals are firing correctly</li>
+<li>Check <strong>Google Ads → Conversions</strong> to see if modeled conversions appear alongside observed ones</li>
+<li>Monitor conversion volume trends — a sudden drop may indicate a consent implementation issue</li>
+</ol>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Consent Mode v2 is no longer optional — it's a requirement for running Google Ads in regions with privacy regulations. Proper implementation ensures you remain compliant while maximizing data recovery through modeled conversions. If you haven't upgraded from v1 yet, do so immediately — Google now requires v2 for European Economic Area (EEA) traffic.</p>
+                  </div>
+
+                  <div class="post-metas my-4">
+                    <div class="post-meta mr-3">
+                      <i class="iconfont icon-date"></i>
+                      <time datetime="2024-07-18">2024-07-18</time>
+                    </div>
+                    <div class="post-meta">
+                      <i class="iconfont icon-tags"></i>
+                      <a href="/tags/Policy-&-News/">#Policy & News</a> <a href="/tags/Ad-Campaigns/">#Ad Campaigns</a> <a href="/tags/Channel-Policies/">#Channel Policies</a> <a href="/tags/Google-Ads/">#Google Ads</a>
+                    </div>
+                  </div>
+
+                  <hr>
+                  <div class="post-nav">
+                    <a href="/" class="post-nav-item">&larr; Back to Home</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-3 d-none d-lg-block">
+                <div class="post-toc" id="toc">
+                  <h4>Table of Contents</h4>
+                  <ul>
+<li><a href="#background">Background: Why Consent Mode Matters</a></li>
+<li><a href="#what-is-consent-mode">What is Consent Mode?</a></li>
+<li><a href="#whats-new-in-v2">What's New in Consent Mode v2</a></li>
+<li><a href="#implementation">Implementation Guide</a></li>
+<li><a href="#modeled-conversions">How Modeled Conversions Work</a></li>
+<li><a href="#impact-on-ads">Impact on Google Ads Performance</a></li>
+<li><a href="#verification">Verification &amp; Monitoring</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+            <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+            <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+
+
+    <div class="statistics">
+
+
+
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views:
+        <span id="busuanzi_value_site_pv"></span>
+
+      </span>
+
+
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors:
+        <span id="busuanzi_value_site_uv"></span>
+
+      </span>
+
+
+</div>
+
+
+
+
+</div>
+
+  </footer>
+  <!-- Scripts -->
+
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"></script>
+<script src="/js/events.js"></script>
+<script src="/js/plugins.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+        typing(text);
+    })(window, document);
+  </script>
+
+    <script src="/js/img-lazyload.js"></script>
+
+  <script src="/js/local-search.js"></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js"></script>
+  <script>anchors.add("h2,h3,h4");</script>
+
+<!-- the boot of the theme, keep it at the bottom -->
+<script src="/js/boot.js"></script>
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
