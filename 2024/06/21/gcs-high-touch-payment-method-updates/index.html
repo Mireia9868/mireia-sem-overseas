@@ -50,6 +50,7 @@
 <meta name="google-adsense-account" content="ca-pub-2269516311541291">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269516311541291"
      crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">
 </head>
 
 <body>
@@ -68,6 +69,8 @@
             <li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> Categories</a></li>
             <li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> Tags</a></li>
             <li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> About</a></li>
+          <li class="nav-item"><a class="nav-link" href="/privacy-policy/"><i class="iconfont icon-user-fill"></i> Privacy</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact/"><i class="iconfont icon-user-fill"></i> Contact</a></li>
           <li class="nav-item" id="search-btn"><a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">&nbsp;<i class="iconfont icon-search"></i>&nbsp;</a></li>
           <li class="nav-item" id="color-toggle-btn"><a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a></li>
       </ul>
@@ -256,6 +259,13 @@
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
     </div>
 
+    <div class="footer-links" style="margin-top: 8px; font-size: 14px;">
+      <a href="/privacy-policy/">Privacy Policy</a> &middot;
+      <a href="/contact/">Contact</a> &middot;
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
+
+
 
     <div class="statistics">
 
@@ -331,5 +341,24 @@
   <noscript>
     <div class="noscript-warning">Blog works best with JavaScript enabled</div>
   </noscript>
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+<script>
+window.addEventListener('load', function() {
+  window.cookieconsent.initialise({
+    palette: {
+      popup: { background: '#2f4154' },
+      button: { background: '#2563eb', text: '#ffffff' }
+    },
+    content: {
+      message: 'This website uses cookies to ensure you get the best experience on our website.',
+      dismiss: 'Got it!',
+      link: 'Learn more',
+      href: '/privacy-policy/'
+    },
+    position: 'bottom'
+  });
+});
+</script>
+
 </body>
 </html>
