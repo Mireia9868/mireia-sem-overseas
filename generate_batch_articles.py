@@ -1,0 +1,594 @@
+#!/usr/bin/env python3
+"""Generate all batch article HTML pages with internal links."""
+
+import os
+import re
+import sys
+from datetime import datetime
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Import batch data
+sys.path.insert(0, BASE_DIR)
+from articles_data_batch1 import ARTICLES_BATCH1
+from articles_data_batch2 import ARTICLES_BATCH2
+
+# Existing articles already on the site (slug, date, title, category, tags)
+EXISTING_ARTICLES = [
+    {"slug": "microsoft-advertising-editor-bulk-editing-guide", "date": "2024-10-30", "title": "Microsoft Advertising Editor: The Ultimate Bulk Editing Tool", "category": "Tools & Tips", "subcategory": "Account Optimization", "tags": ["Tools", "Account Optimization", "Microsoft Advertising Editor"]},
+    {"slug": "bing-ads-account-registration-guide", "date": "2024-10-30", "title": "Bing Ads Account Registration: Complete Setup Guide", "category": "Ad Channels", "subcategory": "Campaign Setup", "tags": ["Bing Ads", "Ad Campaigns", "Account Setup"]},
+    {"slug": "shopify-plus-bing-uet-tag-deployment", "date": "2024-10-30", "title": "Shopify Plus & Bing UET Tag Deployment", "category": "Tracking & Tags", "subcategory": "UET Tag", "tags": ["Bing Ads", "UET Tag", "Shopify", "Conversion Tracking"]},
+    {"slug": "google-ads-compromised-sites-ad-disapproval", "date": "2024-09-21", "title": "Google Ads Compromised Sites: Ad Disapproval Solutions", "category": "Channel Policies", "subcategory": "Policy Updates", "tags": ["Google Ads", "Policy", "Ad Disapproval"]},
+    {"slug": "google-ads-uac-campaign-strategy", "date": "2024-09-21", "title": "Google UAC Campaign Strategy Guide", "category": "Ad Channels", "subcategory": "Campaign Strategy", "tags": ["Google Ads", "UAC", "App Campaigns"]},
+    {"slug": "google-ads-offline-conversion-upload", "date": "2024-09-21", "title": "Google Ads Offline Conversion Upload Guide", "category": "Tracking & Tags", "subcategory": "Conversion Tracking", "tags": ["Google Ads", "Offline Conversion", "Conversion Tracking"]},
+    {"slug": "google-consent-mode-v2-updates", "date": "2024-07-18", "title": "Google Consent Mode V2 Updates", "category": "Channel Policies", "subcategory": "Policy Updates", "tags": ["Google Ads", "Consent Mode", "Privacy"]},
+    {"slug": "gcs-high-touch-payment-method-updates", "date": "2024-06-21", "title": "GCS High Touch Payment Method Updates", "category": "Channel Policies", "subcategory": "Policy Updates", "tags": ["Google Ads", "Payment", "Policy"]},
+    {"slug": "facebook-ads-business-page-optimization", "date": "2024-05-17", "title": "Facebook Ads Business Page Optimization", "category": "Ad Channels", "subcategory": "Facebook Ads", "tags": ["Facebook Ads", "Business Page", "Optimization"]},
+    {"slug": "woocommerce-facebook-pixel-integration", "date": "2024-05-17", "title": "WooCommerce Facebook Pixel Integration", "category": "Tracking & Tags", "subcategory": "Pixel", "tags": ["Facebook Ads", "Pixel", "WooCommerce", "Conversion Tracking"]},
+]
+
+ADSENSE_PUB_ID = "ca-pub-2269516311541291"
+ADSENSE_AD_SLOT = "3862748921"
+GSC_VERIFICATION = "GIdO_iD4VCjnetTm8q99G5TLiGSH9HdRoItNgPjZmP8"
+
+def get_article_url(article):
+    """Get the URL path for an article."""
+    date = article.get("date", "")
+    slug = article.get("slug", "")
+    if date:
+        parts = date.split("-")
+        if len(parts) >= 3:
+            return f"/{parts[0]}/{parts[1]}/{parts[2]}/{slug}/"
+    return f"/{slug}/"
+
+def get_article_dir(article):
+    """Get the filesystem directory for an article."""
+    date = article.get("date", "")
+    slug = article.get("slug", "")
+    if date:
+        parts = date.split("-")
+        if len(parts) >= 3:
+            return os.path.join(BASE_DIR, parts[0], parts[1], parts[2], slug)
+    return os.path.join(BASE_DIR, slug)
+
+def get_relative_depth(date_str):
+    """Get relative path prefix for nav links from an article page."""
+    if date_str:
+        parts = date_str.split("-")
+        if len(parts) >= 3:
+            return "../../../"
+    return "../"
+
+def find_related_articles(article, all_articles, max_results=3):
+    """Find related articles based on category, subcategory, and tags overlap."""
+    scores = {}
+    article_tags = set(article.get("tags", []))
+    article_cat = article.get("category", "")
+    article_subcat = article.get("subcategory", "")
+    article_slug = article.get("slug", "")
+
+    for other in all_articles:
+        if other.get("slug") == article_slug:
+            continue
+        other_tags = set(other.get("tags", []))
+        other_cat = other.get("category", "")
+        other_subcat = other.get("subcategory", "")
+
+        score = 0
+        # Tag overlap is most important
+        common_tags = article_tags & other_tags
+        score += len(common_tags) * 3
+        # Category match
+        if article_cat and article_cat == other_cat:
+            score += 2
+        # Subcategory match
+        if article_subcat and article_subcat == other_subcat:
+            score += 2
+
+        if score > 0:
+            scores[other.get("slug")] = (score, other)
+
+    # Sort by score descending, then by date descending
+    sorted_related = sorted(scores.values(), key=lambda x: (-x[0], x[1].get("date", "")), reverse=False)
+    sorted_related = sorted(scores.values(), key=lambda x: (-x[0], x[1].get("date", "")))
+    return [item[1] for item in sorted_related[:max_results]]
+
+def generate_internal_links_section(article, all_articles):
+    """Generate the 'Related Articles' HTML section with internal links."""
+    related = find_related_articles(article, all_articles, max_results=3)
+    if len(related) < 2:
+        # If not enough related articles, add some defaults
+        for other in all_articles:
+            if other.get("slug") != article.get("slug") and other not in related:
+                related.append(other)
+                if len(related) >= 3:
+                    break
+
+    if not related:
+        return ""
+
+    links_html = []
+    for r in related[:3]:
+        url = get_article_url(r)
+        title = r.get("title", "")
+        links_html.append(f'<li><a href="{url}">{title}</a></li>')
+
+    return f"""
+<div class="post-alert post-alert-info" style="margin: 2rem 0; padding: 1rem 1.5rem; background: #f0f4f8; border-left: 4px solid #2563eb; border-radius: 4px;">
+<h4 style="margin-bottom: 0.5rem;">Related Articles</h4>
+<ul style="margin-bottom: 0;">
+{chr(10).join(links_html)}
+</ul>
+</div>"""
+
+def generate_toc_from_content(content):
+    """Generate table of contents from h2/h3 headings in content."""
+    toc_items = []
+    pattern = r'<h[23]\s+id="([^"]+)">([^<]+)</h[23]>'
+    for match in re.finditer(pattern, content):
+        toc_items.append((match.group(1), match.group(2), match.group(0)[2]))
+
+    if not toc_items:
+        return ""
+
+    toc_html = "<ul>\n"
+    for hid, text, level in toc_items:
+        toc_html += f'<li><a href="#{hid}">{text}</a></li>\n'
+    toc_html += "</ul>\n"
+    return toc_html
+
+def insert_ad_in_content(content):
+    """Insert AdSense in-article ad after the first h2 section."""
+    ad_html = f"""
+<!-- AdSense In-Article Ad -->
+<div class="ad-container" style="margin: 2rem 0; text-align: center;">
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="{ADSENSE_PUB_ID}"
+     data-ad-slot="{ADSENSE_AD_SLOT}"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({{}});
+</script>
+</div>
+"""
+    # Find the first </p> after the first <h2 and insert ad after it
+    first_h2_end = content.find("</h2>")
+    if first_h2_end > 0:
+        first_p_end = content.find("</p>", first_h2_end)
+        if first_p_end > 0:
+            insert_pos = first_p_end + 4
+            return content[:insert_pos] + "\n" + ad_html + "\n" + content[insert_pos:]
+    # Fallback: insert after first paragraph
+    first_p = content.find("</p>")
+    if first_p > 0:
+        insert_pos = first_p + 4
+        return content[:insert_pos] + "\n" + ad_html + "\n" + content[insert_pos:]
+    return content
+
+def generate_article_html(article, all_articles):
+    """Generate complete HTML page for an article."""
+    slug = article.get("slug", "")
+    title = article.get("title", "")
+    date = article.get("date", "")
+    category = article.get("category", "")
+    subcategory = article.get("subcategory", "")
+    tags = article.get("tags", [])
+    excerpt = article.get("excerpt", "")
+    content = article.get("content", "")
+
+    # Date components for URL paths
+    date_parts = date.split("-") if date else ["", "", ""]
+    year, month, day = date_parts[0], date_parts[1], date_parts[2]
+
+    # Relative path to root
+    rel_root = "../../../"
+
+    # Generate tags HTML
+    tags_html = " ".join([f'<a href="/tags/{t.replace(" ", "-")}/">#{t}</a>' for t in tags])
+
+    # Generate category breadcrumb
+    cat_path = category.replace(" ", "-").replace("&", "and") if category else ""
+    category_html = f'<a href="/categories/{cat_path}/">{category}</a>'
+    if subcategory:
+        category_html += f' &gt; {subcategory}'
+
+    # Insert AdSense ad into content
+    content_with_ad = insert_ad_in_content(content)
+
+    # Add internal links
+    related_html = generate_internal_links_section(article, all_articles)
+    content_with_ad = content_with_ad + related_html
+
+    # Generate TOC
+    toc_html = generate_toc_from_content(content)
+
+    # Generate keywords
+    keywords_str = ", ".join(tags[:5]) if tags else "SEM, Google Ads, Bing Ads"
+
+    html = f"""<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/Mireia%20Sem_transparent.png">
+  <link rel="icon" href="/img/Mireia%20Sem_transparent.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mireia">
+  <meta name="keywords" content="{keywords_str}">
+  <meta name="description" content="{excerpt[:160]}">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{title} - Mireia SEM Blog">
+  <meta property="og:site_name" content="Mireia SEM Blog">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:author" content="Mireia">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="referrer" content="no-referrer-when-downgrade">
+  <meta name="google-site-verification" content="{GSC_VERIFICATION}" />
+
+  <title>{title} - Mireia SEM Blog</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2.7.0/hint.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+  <link rel="stylesheet" href="/css/main.css" />
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {{}};
+    Fluid.ctx = Object.assign({{}}, Fluid.ctx)
+    var CONFIG = {{"hostname":"mireiasem.com","root":"/","version":"1.9.3","typing":{{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]}},"anchorjs":{{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""}},"progressbar":{{"enable":true,"height_px":3,"color":"#29d","options":{{"showSpinner":false,"trickleSpeed":100}}}},"code_language":{{"enable":true,"default":"TEXT"}},"copy_btn":true,"image_caption":{{"enable":true}},"image_zoom":{{"enable":true,"img_url_replace":["",""]}},"toc":{{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0}},"lazyload":{{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2}},"web_analytics":{{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{{"sid":null,"cid":null}},"woyaola":null,"cnzz":null,"leancloud":{{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}}}},"search_path":"/local-search.xml"}};
+
+    if (CONFIG.web_analytics.follow_dnt) {{
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }}
+  </script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/color-schema.js"></script>
+
+<meta name="google-adsense-account" content="{ADSENSE_PUB_ID}">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ADSENSE_PUB_ID}"
+     crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">
+</head>
+
+<body>
+  <header>
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="{rel_root}"><strong>Mireia Sem Blog</strong></a>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+            <li class="nav-item"><a class="nav-link" href="{rel_root}"><i class="iconfont icon-home-fill"></i> Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> Archives</a></li>
+            <li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> Categories</a></li>
+            <li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> Tags</a></li>
+            <li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> About</a></li>
+          <li class="nav-item"><a class="nav-link" href="/privacy-policy/"><i class="iconfont icon-user-fill"></i> Privacy</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact/"><i class="iconfont icon-user-fill"></i> Contact</a></li>
+          <li class="nav-item" id="search-btn"><a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">&nbsp;<i class="iconfont icon-search"></i>&nbsp;</a></li>
+          <li class="nav-item" id="color-toggle-btn"><a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div id="banner" class="banner" parallax=true style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2"><span id="subtitle" data-typed-text="{title}"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  </header>
+
+  <main>
+      <div class="container nopadding-x-md">
+        <div id="board" style="margin-top: 0">
+          <div class="container">
+            <div class="row">
+
+              <div class="col-12 col-md-9 m-auto">
+                <div class="page-content">
+                  <div class="markdown-body">
+{content_with_ad}
+                  </div>
+
+                  <div class="post-metas my-4">
+                    <div class="post-meta mr-3">
+                      <i class="iconfont icon-date"></i>
+                      <time datetime="{date}">{date}</time>
+                    </div>
+                    <div class="post-meta">
+                      <i class="iconfont icon-tags"></i>
+                      {tags_html}
+                    </div>
+                  </div>
+
+                  <hr>
+                  <div class="post-nav">
+                    <a href="{rel_root}" class="post-nav-item">&larr; Back to Home</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-3 d-none d-lg-block">
+                <div class="post-toc" id="toc">
+                  <h4>Table of Contents</h4>
+                  {toc_html}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+            <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+            <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+
+    <div class="footer-links" style="margin-top: 8px; font-size: 14px;">
+      <a href="/privacy-policy/">Privacy Policy</a> &middot;
+      <a href="/contact/">Contact</a> &middot;
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
+
+
+
+    <div class="statistics">
+
+
+
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views:
+        <span id="busuanzi_value_site_pv"></span>
+
+      </span>
+
+
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors:
+        <span id="busuanzi_value_site_uv"></span>
+
+      </span>
+
+
+</div>
+
+
+
+
+</div>
+
+  </footer>
+  <!-- Scripts -->
+
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({{"showSpinner":false,"trickleSpeed":100}})
+    NProgress.start()
+    window.addEventListener('load', function() {{
+      NProgress.done();
+    }})
+  </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"></script>
+<script src="/js/events.js"></script>
+<script src="/js/plugins.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
+  <script>
+    (function (window, document) {{
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {{
+        return;
+      }}
+      var text = subtitle.getAttribute('data-typed-text');
+        typing(text);
+    }})(window, document);
+  </script>
+
+    <script src="/js/img-lazyload.js"></script>
+
+  <script src="/js/local-search.js"></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js"></script>
+  <script>anchors.add("h2,h3,h4");</script>
+
+<!-- the boot of the theme, keep it at the bottom -->
+<script src="/js/boot.js"></script>
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+<script>
+window.addEventListener('load', function() {{
+  window.cookieconsent.initialise({{
+    palette: {{
+      popup: {{ background: '#2f4154' }},
+      button: {{ background: '#2563eb', text: '#ffffff' }}
+    }},
+    content: {{
+      message: 'This website uses cookies to ensure you get the best experience on our website.',
+      dismiss: 'Got it!',
+      link: 'Learn more',
+      href: '/privacy-policy/'
+    }}
+  }});
+}});
+</script>
+</body>
+</html>"""
+    return html
+
+
+def update_sitemap(all_articles):
+    """Update sitemap.xml with all articles."""
+    urls = []
+    # Add static pages
+    static_urls = [
+        "https://mireiasem.com/",
+        "https://mireiasem.com/archives/",
+        "https://mireiasem.com/categories/",
+        "https://mireiasem.com/tags/",
+        "https://mireiasem.com/about/",
+        "https://mireiasem.com/privacy-policy/",
+        "https://mireiasem.com/contact/",
+    ]
+    for url in static_urls:
+        urls.append(f"""  <url>
+    <loc>{url}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>""")
+
+    # Add all articles
+    for article in all_articles:
+        url = f"https://mireiasem.com{get_article_url(article)}"
+        date = article.get("date", "")
+        urls.append(f"""  <url>
+    <loc>{url}</loc>
+    <lastmod>{date}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>""")
+
+    sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{chr(10).join(urls)}
+</urlset>"""
+
+    sitemap_path = os.path.join(BASE_DIR, "sitemap.xml")
+    with open(sitemap_path, "w", encoding="utf-8") as f:
+        f.write(sitemap)
+    print(f"Updated sitemap.xml with {len(urls)} URLs")
+
+
+def update_local_search_xml(all_articles):
+    """Update local-search.xml with all articles for site search."""
+    items = []
+    for article in all_articles:
+        url = get_article_url(article)
+        title = article.get("title", "")
+        date = article.get("date", "")
+        excerpt = article.get("excerpt", "")
+        content_text = article.get("content", "")
+        # Strip HTML tags for search
+        content_text = re.sub(r'<[^>]+>', ' ', content_text)
+        content_text = re.sub(r'\s+', ' ', content_text).strip()
+        content_text = content_text[:500]
+
+        items.append(f"""  <entry>
+    <title>{title}</title>
+    <link href="https://mireiasem.com{url}"/>
+    <url>https://mireiasem.com{url}</url>
+    <content>{title} {excerpt} {content_text}</content>
+    <date>{date}</date>
+  </entry>""")
+
+    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<search>
+{chr(10).join(items)}
+</search>"""
+
+    xml_path = os.path.join(BASE_DIR, "local-search.xml")
+    with open(xml_path, "w", encoding="utf-8") as f:
+        f.write(xml)
+    print(f"Updated local-search.xml with {len(items)} entries")
+
+
+def main():
+    # Combine all articles
+    all_batch_articles = list(ARTICLES_BATCH1) + list(ARTICLES_BATCH2)
+    all_articles = list(EXISTING_ARTICLES) + all_batch_articles
+
+    print(f"Total articles: {len(all_articles)}")
+    print(f"  - Existing on site: {len(EXISTING_ARTICLES)}")
+    print(f"  - New from batches: {len(all_batch_articles)}")
+
+    generated = 0
+    errors = 0
+
+    for article in all_batch_articles:
+        try:
+            html = generate_article_html(article, all_articles)
+            article_dir = get_article_dir(article)
+            os.makedirs(article_dir, exist_ok=True)
+            output_path = os.path.join(article_dir, "index.html")
+            with open(output_path, "w", encoding="utf-8") as f:
+                f.write(html)
+            generated += 1
+            print(f"  Generated: {article['slug']} -> {output_path}")
+        except Exception as e:
+            errors += 1
+            print(f"  ERROR generating {article.get('slug', 'unknown')}: {e}")
+
+    print(f"\nGeneration complete: {generated} articles generated, {errors} errors")
+
+    # Update sitemap and search
+    update_sitemap(all_articles)
+    update_local_search_xml(all_articles)
+
+    # Verify internal links
+    print("\n--- Internal Link Verification ---")
+    for article in all_batch_articles:
+        related = find_related_articles(article, all_articles, max_results=3)
+        print(f"  {article['slug']}: {len(related)} related articles linked")
+
+
+if __name__ == "__main__":
+    main()
