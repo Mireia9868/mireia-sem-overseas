@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block search parameter pages from indexing
+Disallow: /*?s=
+Disallow: /*?q=
+Disallow: /local-search.xml
+
+# Sitemap
+Sitemap: https://mireiasem.com/sitemap.xml
