@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mireiasem.com 内容更新计划 2026-2027</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --green: #059669;
+    --green-light: #d1fae5;
+    --orange: #d97706;
+    --orange-light: #fef3c7;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --card-bg: #f9fafb;
+    --tag-bg: #f3f4f6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+  h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  h2 { font-size: 21px; font-weight: 700; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+  h3 { font-size: 17px; font-weight: 600; margin: 32px 0 12px; color: var(--accent); }
+  h4 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; }
+
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+  .meta span { margin-right: 16px; }
+
+  /* Audit Cards */
+  .audit-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+  .audit-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .audit-card .num { font-size: 32px; font-weight: 800; color: var(--accent); }
+  .audit-card .label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* Status badges */
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-orange { background: var(--orange-light); color: var(--orange); }
+  .badge-red { background: var(--red-light); color: var(--red); }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
+  thead { background: var(--accent); color: white; }
+  th { padding: 10px 12px; text-align: left; font-weight: 600; }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: var(--card-bg); }
+
+  /* Phase cards */
+  .phase { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 20px 0; }
+  .phase-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .phase-title { font-size: 18px; font-weight: 700; }
+  .phase-badge { font-size: 13px; padding: 4px 12px; border-radius: 16px; font-weight: 600; }
+  .phase-badge-p1 { background: var(--accent-light); color: var(--accent); }
+  .phase-badge-p2 { background: var(--green-light); color: var(--green); }
+  .phase-badge-p3 { background: var(--orange-light); color: var(--orange); }
+  .phase-badge-p4 { background: #e0e7ff; color: #4338ca; }
+
+  /* Topic list */
+  .topic-list { list-style: none; }
+  .topic-list li { padding: 10px 0; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 10px; }
+  .topic-list li:last-child { border-bottom: none; }
+  .topic-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* Calendar */
+  .calendar-week { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); align-items: center; }
+  .calendar-week .week-num { width: 80px; font-weight: 700; color: var(--accent); font-size: 14px; flex-shrink: 0; }
+  .calendar-week .week-content { flex: 1; }
+  .calendar-week .week-content strong { display: block; }
+  .calendar-week .week-content span { font-size: 13px; color: var(--muted); }
+
+  /* Metrics */
+  .metrics-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0; }
+  .metric-card { background: var(--accent-light); border-radius: 10px; padding: 18px; text-align: center; }
+  .metric-card .val { font-size: 28px; font-weight: 800; color: var(--accent); }
+  .metric-card .lbl { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  .highlight-box { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; padding: 16px; margin: 16px 0; font-size: 14px; }
+  .highlight-box strong { color: var(--orange); }
+
+  /* Tags */
+  .tag { display: inline-block; background: var(--tag-bg); padding: 2px 8px; border-radius: 6px; font-size: 12px; margin: 2px 4px 2px 0; }
+
+  /* Print */
+  @media print {
+    body { font-size: 13px; }
+    .container { max-width: 100%; padding: 20px; }
+    h2 { page-break-before: always; }
+    h2:first-of-type { page-break-before: avoid; }
+  }
+
+  .toc { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin: 24px 0; }
+  .toc a { color: var(--accent); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .toc ol { padding-left: 20px; }
+  .toc li { padding: 3px 0; font-size: 14px; }
+
+  .gap-box { border-left: 3px solid var(--red); background: var(--red-light); padding: 12px 16px; margin: 12px 0; border-radius: 0 8px 8px 0; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>mireiasem.com 内容更新计划</h1>
+<div class="meta">
+  <span>编制日期: 2026-08-03</span>
+  <span>版本: v1.0</span>
+  <span>周期: 2026 Q3 - 2027 Q2 (12个月)</span>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <strong>目录</strong>
+  <ol>
+    <li><a href="#audit">内容现状审计</a></li>
+    <li><a href="#gaps">关键内容缺口</a></li>
+    <li><a href="#roadmap">四阶段更新路线图</a></li>
+    <li><a href="#calendar">编辑日历 (月度)</a></li>
+    <li><a href="#quality">内容质量标准 &amp; SEO Checklist</a></li>
+    <li><a href="#metrics">成功指标 &amp; 跟踪</a></li>
+  </ol>
+</div>
+
+<!-- ==================== SECTION 1: AUDIT ==================== -->
+<h2 id="audit">1. 内容现状审计</h2>
+
+<div class="audit-row">
+  <div class="audit-card">
+    <div class="num">53</div>
+    <div class="label">文章总数</div>
+  </div>
+  <div class="audit-card">
+    <div class="num">5</div>
+    <div class="label">内容分类</div>
+  </div>
+  <div class="audit-card">
+    <div class="num">114</div>
+    <div class="label">标签数</div>
+  </div>
+  <div class="audit-card">
+    <div class="num">21<small>个月</small></div>
+    <div class="label">内容断更时长 <span class="badge badge-red">告警</span></div>
+  </div>
+</div>
+
+<h3>1.1 按分类分布</h3>
+<table>
+  <thead><tr><th>分类</th><th>文章数</th><th>占比</th><th>最近更新</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td>Ad Channels (广告渠道)</td><td>18</td><td>34%</td><td>2024-01-01</td><td><span class="badge badge-orange">需补充</span></td></tr>
+    <tr><td>SEM (搜索引擎营销)</td><td>12</td><td>23%</td><td>2024-10-30</td><td><span class="badge badge-green">相对新</span></td></tr>
+    <tr><td>Channel Policies (渠道政策)</td><td>10</td><td>19%</td><td>2024-04-11</td><td><span class="badge badge-red">严重滞后</span></td></tr>
+    <tr><td>Conversion Tracking (转化追踪)</td><td>8</td><td>15%</td><td>2024-01-01</td><td><span class="badge badge-orange">需补充</span></td></tr>
+    <tr><td>Tools & Tips (工具技巧)</td><td>3</td><td>6%</td><td>2024-01-01</td><td><span class="badge badge-red">严重不足</span></td></tr>
+    <tr style="font-weight:600; background: var(--accent-light);"><td>External Links / About / Contact</td><td>2</td><td>4%</td><td>—</td><td>非内容页</td></tr>
+  </tbody>
+</table>
+
+<h3>1.2 按平台覆盖</h3>
+<table>
+  <thead><tr><th>广告平台</th><th>文章数</th><th>覆盖度评估</th></tr></thead>
+  <tbody>
+    <tr><td>Google Ads</td><td>22</td><td><span class="badge badge-green">充分</span> — 但缺少 PMax 深度内容</td></tr>
+    <tr><td>Microsoft / Bing Ads</td><td>19</td><td><span class="badge badge-green">充分</span> — 但缺少 Copilot AI 整合</td></tr>
+    <tr><td>Facebook / Meta Ads</td><td>2</td><td><span class="badge badge-red">严重不足</span> — 仅基础设置，缺 Advantage+ </td></tr>
+    <tr><td>Criteo</td><td>2</td><td><span class="badge badge-orange">浅层</span></td></tr>
+    <tr><td>TikTok Ads</td><td>0</td><td><span class="badge badge-red">完全缺失</span> — 2026年 $34B 平台</td></tr>
+    <tr><td>LinkedIn Ads</td><td>0</td><td><span class="badge badge-red">完全缺失</span> — B2B 核心渠道</td></tr>
+    <tr><td>Amazon Ads</td><td>0</td><td><span class="badge badge-red">完全缺失</span> — 增速最快渠道</td></tr>
+  </tbody>
+</table>
+
+<h3>1.3 按时间分布</h3>
+<table>
+  <thead><tr><th>时间段</th><th>文章数</th><th>月均产出</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td>2022 Q4</td><td>14</td><td>4.7</td><td>建站爆发期</td></tr>
+    <tr><td>2023</td><td>15</td><td>1.3</td><td>稳定产出</td></tr>
+    <tr><td>2024</td><td>24</td><td>2.0</td><td>活跃期，10月后停滞</td></tr>
+    <tr style="background: var(--red-light);"><td>2024-11 ~ 2026-07</td><td>0</td><td>0</td><td><span class="badge badge-red">21个月断更</span></td></tr>
+  </tbody>
+</table>
+
+<div class="highlight-box">
+  <strong>关键发现：</strong>站点自2024年10月30日后完全断更，至今已有21个月。Google Ads 相关策略、政策、
+  行业趋势在此期间发生重大变化（PMax 占比从18%升至41%、AI Overviews 上线、Bing Copilot 整合、
+  Consent Mode v2 强制执行等），现有内容大量已过时。
+</div>
+
+<!-- ==================== SECTION 2: GAPS ==================== -->
+<h2 id="gaps">2. 关键内容缺口 (优先级排序)</h2>
+
+<div class="gap-box">
+  <strong>P0 — 致命缺口（缺少将直接导致站点可信度下降）</strong>
+</div>
+<table>
+  <thead><tr><th>#</th><th>缺口主题</th><th>严重性</th><th>理由</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><strong>Google Ads PMax 深度系列</strong></td><td><span class="badge badge-red">致命</span></td><td>41%的 Google Ads 预算走 PMax，是2024-2026最大的广告产品变革。站点完全没有覆盖</td></tr>
+    <tr><td>2</td><td><strong>AI Overviews & SGE 对 SEM 的影响</strong></td><td><span class="badge badge-red">致命</span></td><td>AI Overviews 改变了搜索广告的展示和点击逻辑，付费广告 CTR 反升。这是2025-2026行业最大话题</td></tr>
+    <tr><td>3</td><td><strong>Consent Mode v2 & 隐私合规</strong></td><td><span class="badge badge-red">致命</span></td><td>Google 强制要求，不配置将失去 EU 市场转化追踪。站点仅 Bing 侧有一篇</td></tr>
+  </tbody>
+</table>
+
+<div class="gap-box">
+  <strong>P1 — 严重缺口（影响站点专业深度和受众覆盖面）</strong>
+</div>
+<table>
+  <thead><tr><th>#</th><th>缺口主题</th><th>严重性</th><th>理由</th></tr></thead>
+  <tbody>
+    <tr><td>4</td><td><strong>TikTok Ads 入门到进阶</strong></td><td><span class="badge badge-orange">严重</span></td><td>$34B 年收入、74% CAGR 的平台，站点零覆盖</td></tr>
+    <tr><td>5</td><td><strong>Meta Advantage+ 系列</strong></td><td><span class="badge badge-orange">严重</span></td><td>Meta 的 AI 自动化对等 PMax，仅有两篇基础 Facebook 文章</td></tr>
+    <tr><td>6</td><td><strong>Server-side Tracking & Enhanced Conversions</strong></td><td><span class="badge badge-orange">严重</span></td><td>行业标配技术，20-35% 转化恢复率。站点仅浅层提及</td></tr>
+    <tr><td>7</td><td><strong>LinkedIn Ads B2B 策略</strong></td><td><span class="badge badge-orange">严重</span></td><td>$8B B2B 广告市场，高客单价客户的核心渠道</td></tr>
+    <tr><td>8</td><td><strong>跨平台归因模型</strong></td><td><span class="badge badge-orange">严重</span></td><td>多平台投放标准配置，站点无系统归因内容</td></tr>
+  </tbody>
+</table>
+
+<div class="gap-box">
+  <strong>P2 — 中度缺口（补充后提升站点差异化竞争力）</strong>
+</div>
+<table>
+  <thead><tr><th>#</th><th>缺口主题</th><th>严重性</th><th>理由</th></tr></thead>
+  <tbody>
+    <tr><td>9</td><td>Demand Gen 广告系列深度</td><td><span class="badge badge-orange">中度</span></td><td>Google 力推的新广告类型，增长78%</td></tr>
+    <tr><td>10</td><td>GA4 深度分析系列</td><td><span class="badge badge-orange">中度</span></td><td>UA 已完全停用，站点 GA4 内容不足</td></tr>
+    <tr><td>11</td><td>多渠道电商投放案例</td><td><span class="badge badge-orange">中度</span></td><td>站点缺乏实战案例，不利于 EEAT 建设</td></tr>
+    <tr><td>12</td><td>日本/德国市场 SEM 策略</td><td><span class="badge badge-orange">中度</span></td><td>用户实际运营的市场，可直接复用经验</td></tr>
+    <tr><td>13</td><td>广告自动化 & MCP 工具</td><td><span class="badge badge-orange">中度</span></td><td>用户正在主导 MCP 项目，可直接输出</td></tr>
+    <tr><td>14</td><td>Bing Copilot 广告整合</td><td><span class="badge badge-orange">中度</span></td><td>Bing 23% 广告主增长的核心驱动力</td></tr>
+  </tbody>
+</table>
+
+<!-- ==================== SECTION 3: ROADMAP ==================== -->
+<h2 id="roadmap">3. 四阶段更新路线图</h2>
+
+<!-- Phase 1 -->
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-title">第一阶段：止血 — 填补致命缺口</span>
+    <span class="phase-badge phase-badge-p1">2026年8月~9月 · 8周 · 10篇</span>
+  </div>
+  <p style="color:var(--muted); margin-bottom: 16px;">目标：消除站点核心专业性缺失，覆盖2025-2026最重要的行业变化。</p>
+
+  <ul class="topic-list">
+    <li>
+      <span class="topic-icon">1</span>
+      <div><strong>Google Ads Performance Max 完全指南 (2026版)</strong><br>
+      <span style="font-size:13px;color:var(--muted)">资产组结构、受众信号、品牌排除、搜索主题、负关键词策略。覆盖竞品无法提供的透明度分析。</span>
+      <br><span class="tag">Google Ads</span><span class="tag">PMax</span><span class="tag">AI Automation</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">2</span>
+      <div><strong>PMax vs Standard Shopping：何时切换、如何共存</strong><br>
+      <span style="font-size:13px;color:var(--muted)">预算分配策略、品牌词蚕食风险控制、增量测试框架。</span>
+      <br><span class="tag">Google Ads</span><span class="tag">Shopping</span><span class="tag">Budget Strategy</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">3</span>
+      <div><strong>AI Overviews 时代：SEM 广告策略如何调整</strong><br>
+      <span style="font-size:13px;color:var(--muted)">AI Overviews 对搜索广告 CTR 的影响数据、品牌词保护策略、AI 搜索中的广告位变化。</span>
+      <br><span class="tag">AI Search</span><span class="tag">SEO + SEM</span><span class="tag">Trends</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">4</span>
+      <div><strong>Google Consent Mode v2 实施完全指南</strong><br>
+      <span style="font-size:13px;color:var(--muted)">技术实现路径（GTM/代码级）、GDPR 合规检查清单、70% 转化恢复的实现方法。</span>
+      <br><span class="tag">Privacy</span><span class="tag">Consent Mode</span><span class="tag">GDPR</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">5</span>
+      <div><strong>Enhanced Conversions & Server-side Tracking 实操</strong><br>
+      <span style="font-size:13px;color:var(--muted)">Google Ads EC + Meta CAPI + Bing UET Enhanced 三平台对照实施。</span>
+      <br><span class="tag">Conversion Tracking</span><span class="tag">Server-side</span><span class="tag">Multi-platform</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">6</span>
+      <div><strong>2026 上半年 Google Ads 产品更新汇总</strong><br>
+      <span style="font-size:13px;color:var(--muted)">政策变化、新产品、界面更新、对广告主的影响分析。</span>
+      <br><span class="tag">Policy</span><span class="tag">Product Updates</span><span class="tag">Google Ads</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">7</span>
+      <div><strong>2026 上半年 Microsoft Advertising 产品更新汇总</strong><br>
+      <span style="font-size:13px;color:var(--muted)">Copilot 广告整合、新广告格式、政策变更。</span>
+      <br><span class="tag">Policy</span><span class="tag">Product Updates</span><span class="tag">Bing Ads</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">8</span>
+      <div><strong>Google Ads 账户健康度审计清单 (2026版)</strong><br>
+      <span style="font-size:13px;color:var(--muted)">优化得分、转化追踪、受众信号、创意新鲜度等维度检查。</span>
+      <br><span class="tag">Account Audit</span><span class="tag">Optimization</span><span class="tag">Google Ads</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">9</span>
+      <div><strong>2026年 SEM 行业基准数据报告</strong><br>
+      <span style="font-size:13px;color:var(--muted)">多平台 CPC / CTR / CVR / CPA 基准对比，分行业/地区。可引用第三方数据 + 自身经验。</span>
+      <br><span class="tag">Benchmarks</span><span class="tag">Industry Data</span><span class="tag">Multi-platform</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">10</span>
+      <div><strong>Google Ads 广告拒登排查与申诉 (2026版)</strong><br>
+      <span style="font-size:13px;color:var(--muted)">更新后的审核流程、Compromised Sites 处理、政策红线变化。</span>
+      <br><span class="tag">Policy</span><span class="tag">Ad Disapproval</span><span class="tag">Google Ads</span>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- Phase 2 -->
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-title">第二阶段：扩面 — 补全平台覆盖</span>
+    <span class="phase-badge phase-badge-p2">2026年10月~11月 · 8周 · 9篇</span>
+  </div>
+  <p style="color:var(--muted); margin-bottom: 16px;">目标：覆盖 TikTok、LinkedIn、Amazon 三大缺失平台，建立跨平台专业形象。</p>
+
+  <ul class="topic-list">
+    <li>
+      <span class="topic-icon">11</span>
+      <div><strong>TikTok Ads 入门完全指南</strong><br>
+      <span style="font-size:13px;color:var(--muted)">账户设置、Pixel 安装、广告类型、出价策略。</span>
+      <br><span class="tag">TikTok Ads</span><span class="tag">Setup</span><span class="tag">Social Ads</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">12</span>
+      <div><strong>TikTok Shop 广告 vs 独立站引流策略</strong><br>
+      <span style="font-size:13px;color:var(--muted)">ShopGMV 模型 vs 外链转化模型选择、数据对比。</span>
+      <br><span class="tag">TikTok Shop</span><span class="tag">E-commerce</span><span class="tag">Social Commerce</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">13</span>
+      <div><strong>LinkedIn Ads B2B 投放完全指南</strong><br>
+      <span style="font-size:13px;color:var(--muted)">受众定向策略、Lead Gen Forms、Thought Leader Ads、预算规划。</span>
+      <br><span class="tag">LinkedIn Ads</span><span class="tag">B2B</span><span class="tag">Lead Gen</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">14</span>
+      <div><strong>Meta Advantage+ 系列完全指南</strong><br>
+      <span style="font-size:13px;color:var(--muted)">Advantage+ Shopping、Advantage+ Creative、受众信号最佳实践。</span>
+      <br><span class="tag">Meta Ads</span><span class="tag">Advantage+</span><span class="tag">AI Automation</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">15</span>
+      <div><strong>Amazon Ads 入门：Sponsored Products 投放策略</strong><br>
+      <span style="font-size:13px;color:var(--muted)">自动/手动投放、关键词策略、ACOS 优化。</span>
+      <br><span class="tag">Amazon Ads</span><span class="tag">Marketplace</span><span class="tag">E-commerce</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">16</span>
+      <div><strong>Google Demand Gen 广告系列完全指南</strong><br>
+      <span style="font-size:13px;color:var(--muted)">Discovery Ads 的升级版，YouTube Shorts + Discover + Gmail 整合。</span>
+      <br><span class="tag">Google Ads</span><span class="tag">Demand Gen</span><span class="tag">Video Ads</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">17</span>
+      <div><strong>Bing Copilot + Microsoft Advertising 整合实战</strong><br>
+      <span style="font-size:13px;color:var(--muted)">Copilot 搜索结果中的广告位、投放策略、数据表现。</span>
+      <br><span class="tag">Bing Ads</span><span class="tag">Copilot</span><span class="tag">AI Search</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">18</span>
+      <div><strong>跨平台投放预算分配框架</strong><br>
+      <span style="font-size:13px;color:var(--muted)">Google + Meta + TikTok + Bing 的预算分配模型、渠道角色定位。</span>
+      <br><span class="tag">Budget Strategy</span><span class="tag">Multi-platform</span><span class="tag">Media Planning</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">19</span>
+      <div><strong>跨境独立站的多渠道广告矩阵搭建</strong><br>
+      <span style="font-size:13px;color:var(--muted)">从0到1的多平台整合策略、启动顺序、预算爬坡。</span>
+      <br><span class="tag">Cross-border</span><span class="tag">E-commerce</span><span class="tag">Strategy</span>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- Phase 3 -->
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-title">第三阶段：深耕 — 差异化 & 实战案例</span>
+    <span class="phase-badge phase-badge-p3">2026年12月~2027年2月 · 10周 · 8篇</span>
+  </div>
+  <p style="color:var(--muted); margin-bottom: 16px;">目标：输出不可替代的实战内容，建立 EEAT 权威度。</p>
+
+  <ul class="topic-list">
+    <li>
+      <span class="topic-icon">20</span>
+      <div><strong>案例：日本市场 SEM 投放实战 (Yahoo Japan + Google + Bing)</strong><br>
+      <span style="font-size:13px;color:var(--muted)">关键词差异、文化适配、出价策略、平台选择逻辑。</span>
+      <br><span class="tag">Case Study</span><span class="tag">Japan Market</span><span class="tag">Multi-platform</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">21</span>
+      <div><strong>案例：德国 D2C 商用设备市场 Google + Bing 投放拆解</strong><br>
+      <span style="font-size:13px;color:var(--muted)">B2B 长转化周期追踪、多语言关键词策略、UET 追踪方案。</span>
+      <br><span class="tag">Case Study</span><span class="tag">Germany Market</span><span class="tag">B2B</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">22</span>
+      <div><strong>SEM 广告自动化：MCP 工具实战 & 自建系统思路</strong><br>
+      <span style="font-size:13px;color:var(--muted)">规则引擎设计、跨平台数据打通、自动出价/预算调整逻辑。</span>
+      <br><span class="tag">Automation</span><span class="tag">MCP</span><span class="tag">Tools</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">23</span>
+      <div><strong>数据归因的真相：Google Ads / GA4 / Meta 三方数据对齐</strong><br>
+      <span style="font-size:13px;color:var(--muted)">归因窗口差异、去重策略、single source of truth 建设。</span>
+      <br><span class="tag">Attribution</span><span class="tag">GA4</span><span class="tag">Data Analysis</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">24</span>
+      <div><strong>Shopify 店铺的广告追踪全栈方案 (2026版)</strong><br>
+      <span style="font-size:13px;color:var(--muted)">Google Ads + Meta + Bing + TikTok 追踪集成，含 Checkout Extensibility 适配。</span>
+      <br><span class="tag">Shopify</span><span class="tag">Tracking</span><span class="tag">E-commerce</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">25</span>
+      <div><strong>广告创意测试框架：从 A/B 到多变量</strong><br>
+      <span style="font-size:13px;color:var(--muted)">创意测试方法论、统计显著性判断、多平台素材复用策略。</span>
+      <br><span class="tag">Creative</span><span class="tag">Testing</span><span class="tag">Optimization</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">26</span>
+      <div><strong>GA4 广告分析进阶：自定义报告 & 受众构建</strong><br>
+      <span style="font-size:13px;color:var(--muted)">Explorations、自定义漏斗、受众导出到 Google Ads。</span>
+      <br><span class="tag">GA4</span><span class="tag">Analytics</span><span class="tag">Audience</span>
+      </div>
+    </li>
+    <li>
+      <span class="topic-icon">27</span>
+      <div><strong>SEM 竞品分析框架：从关键词到创意</strong><br>
+      <span style="font-size:13px;color:var(--muted)">SimilarWeb / SEMrush / 广告透明度库的综合使用。</span>
+      <br><span class="tag">Competitive Analysis</span><span class="tag">Tools</span><span class="tag">Strategy</span>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- Phase 4 -->
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-title">第四阶段：持续运营 — 建立节奏</span>
+    <span class="phase-badge phase-badge-p4">2027年3月~7月 · 月均2篇 · 10篇</span>
+  </div>
+  <p style="color:var(--muted); margin-bottom: 16px;">目标：从项目制转为常态化运营，月均稳定产出，维持内容新鲜度。</p>
+
+  <ul class="topic-list">
+    <li>
+      <span class="topic-icon">28</span>
+      <div><strong>2026年度 SEM 行业回顾与2027展望</strong> <span class="badge badge-green">年度固定栏目</span></div>
+    </li>
+    <li>
+      <span class="topic-icon">29</span>
+      <div><strong>2027上半年 Google Ads 产品更新汇总</strong> <span class="badge badge-green">半年度固定栏目</span></div>
+    </li>
+    <li>
+      <span class="topic-icon">30</span>
+      <div><strong>2027上半年 Microsoft Advertising 更新汇总</strong> <span class="badge badge-green">半年度固定栏目</span></div>
+    </li>
+    <li>
+      <span class="topic-icon">31</span>
+      <div><strong>跨境广告投放工具生态盘点 (2027版)</strong> <span class="badge badge-green">年度固定栏目</span></div>
+    </li>
+    <li>
+      <span class="topic-icon">32~36</span>
+      <div><strong>按行业热点动态选题 5篇</strong> — 如新平台广告产品、政策重大变更、AI新品发布等</div>
+    </li>
+  </ul>
+</div>
+
+<!-- ==================== SECTION 4: CALENDAR ==================== -->
+<h2 id="calendar">4. 编辑日历 (月度视图)</h2>
+
+<table>
+  <thead><tr><th>月份</th><th>产出</th><th>具体选题</th></tr></thead>
+  <tbody>
+    <tr style="background: var(--accent-light);"><td colspan="3"><strong>第一阶段：止血</strong></td></tr>
+    <tr><td>2026-08 W1</td><td>2篇</td><td>#1 PMax 完全指南 / #2 PMax vs Standard Shopping</td></tr>
+    <tr><td>2026-08 W2</td><td>2篇</td><td>#3 AI Overviews 时代 SEM 策略 / #4 Consent Mode v2 指南</td></tr>
+    <tr><td>2026-08 W3</td><td>1篇</td><td>#5 Enhanced Conversions & Server-side Tracking</td></tr>
+    <tr><td>2026-08 W4</td><td>2篇</td><td>#6 Google Ads 2026 H1 产品更新 / #7 Microsoft Ads 2026 H1 更新</td></tr>
+    <tr><td>2026-09 W1</td><td>1篇</td><td>#8 Google Ads 账户健康度审计清单</td></tr>
+    <tr><td>2026-09 W2</td><td>1篇</td><td>#9 2026年 SEM 行业基准数据报告</td></tr>
+    <tr><td>2026-09 W3</td><td>1篇</td><td>#10 广告拒登排查与申诉</td></tr>
+    <tr><td>2026-09 W4</td><td>—</td><td><em>第一阶段收尾：检查索引状态、内部链接更新、旧文章标记更新</em></td></tr>
+
+    <tr style="background: var(--accent-light);"><td colspan="3"><strong>第二阶段：扩面</strong></td></tr>
+    <tr><td>2026-10 W1</td><td>2篇</td><td>#11 TikTok Ads 入门 / #12 TikTok Shop vs 独立站</td></tr>
+    <tr><td>2026-10 W2</td><td>2篇</td><td>#13 LinkedIn Ads B2B 指南 / #14 Meta Advantage+ 指南</td></tr>
+    <tr><td>2026-10 W3</td><td>1篇</td><td>#15 Amazon Ads 入门</td></tr>
+    <tr><td>2026-10 W4</td><td>1篇</td><td>#16 Google Demand Gen 指南</td></tr>
+    <tr><td>2026-11 W1</td><td>1篇</td><td>#17 Bing Copilot 广告整合</td></tr>
+    <tr><td>2026-11 W2</td><td>1篇</td><td>#18 跨平台预算分配框架</td></tr>
+    <tr><td>2026-11 W3</td><td>1篇</td><td>#19 跨境独立站多渠道矩阵搭建</td></tr>
+    <tr><td>2026-11 W4</td><td>—</td><td><em>缓冲周 / SEO审阅</em></td></tr>
+
+    <tr style="background: var(--accent-light);"><td colspan="3"><strong>第三阶段：深耕</strong></td></tr>
+    <tr><td>2026-12</td><td>3篇</td><td>#20 日本市场案例 / #21 德国D2C案例 / #22 MCP自动化实战</td></tr>
+    <tr><td>2027-01</td><td>2篇</td><td>#23 数据归因真相 / #24 Shopify全栈追踪</td></tr>
+    <tr><td>2027-02</td><td>3篇</td><td>#25 创意测试框架 / #26 GA4进阶分析 / #27 SEM竞品分析</td></tr>
+
+    <tr style="background: var(--accent-light);"><td colspan="3"><strong>第四阶段：稳态运营</strong></td></tr>
+    <tr><td>2027-03</td><td>2篇</td><td>#28 2026年度回顾 / 趋势选题1</td></tr>
+    <tr><td>2027-04</td><td>2篇</td><td>趋势选题2+3</td></tr>
+    <tr><td>2027-05</td><td>2篇</td><td>趋势选题4+5</td></tr>
+    <tr><td>2027-06</td><td>2篇</td><td>#29 Google Ads 2027 H1 更新 / #30 Microsoft Ads 2027 H1 更新</td></tr>
+    <tr><td>2027-07</td><td>2篇</td><td>#31 工具生态盘点 / 趋势选题</td></tr>
+  </tbody>
+</table>
+
+<!-- ==================== SECTION 5: QUALITY ==================== -->
+<h2 id="quality">5. 内容质量标准 & 发布 Checklist</h2>
+
+<h3>5.1 每篇文章质量标准</h3>
+<table>
+  <thead><tr><th>维度</th><th>标准</th></tr></thead>
+  <tbody>
+    <tr><td><strong>长度</strong></td><td>1,500-3,000 英文单词。教程类偏长（2,500+），行业动态可略短（1,500+）</td></tr>
+    <tr><td><strong>结构</strong></td><td>H2 主段落 + H3 子段落、有目录（长文）、有总结/Key Takeaways</td></tr>
+    <tr><td><strong>数据</strong></td><td>引用具体数据/截图佐证，至少2处数据支撑。引用来源链接</td></tr>
+    <tr><td><strong>原创性</strong></td><td>避免直接翻译竞品内容。融入 Mireia 实际运营经验和观点</td></tr>
+    <tr><td><strong>内部链接</strong></td><td>每篇至少3条 Related Articles 内部链接，匹配 category/tag</td></tr>
+    <tr><td><strong>多媒体</strong></td><td>至少1张截图/图表/流程图（英文界面）。教程类至少3张</td></tr>
+    <tr><td><strong>CTA</strong></td><td>结尾自然引导，可指向站内相关内容或 Contact 页</td></tr>
+  </tbody>
+</table>
+
+<h3>5.2 发布前 SEO Checklist</h3>
+<table>
+  <thead><tr><th>检查项</th><th>要求</th></tr></thead>
+  <tbody>
+    <tr><td>Title tag</td><td>55-65字符，含核心关键词，格式: "[主题] | Mireia SEM Blog"</td></tr>
+    <tr><td>Meta description</td><td>140-155字符，含 CTA 暗示，自然嵌入关键词</td></tr>
+    <tr><td>URL slug</td><td>短、描述性强、含核心词，如 /google-ads-pmax-guide-2026/</td></tr>
+    <tr><td>Canonical URL</td><td>自引用 canonical，防止重复内容</td></tr>
+    <tr><td>OG tags</td><td>og:title, og:description, og:image (1200x630 或站点默认), og:type=article</td></tr>
+    <tr><td>Twitter Card</td><td>summary_large_image, 含 twitter:title, twitter:description, twitter:image</td></tr>
+    <tr><td>JSON-LD</td><td>BlogPosting + BreadcrumbList schema</td></tr>
+    <tr><td>H1 唯一</td><td>每页仅一个 H1，与 title 呼应但不完全相同</td></tr>
+    <tr><td>图片 alt</td><td>所有图片有描述性 alt 文本，含关键词</td></tr>
+    <tr><td>内部链接</td><td>至少2-3条指向其他相关文章</td></tr>
+    <tr><td>AdSense</td><td>文章中部嵌入1个 in-article ad 单元</td></tr>
+    <tr><td>Mobile</td><td>在 375px 宽度验证可读性</td></tr>
+  </tbody>
+</table>
+
+<h3>5.3 旧文章维护策略</h3>
+<table>
+  <thead><tr><th>操作</th><th>触发条件</th><th>频率</th></tr></thead>
+  <tbody>
+    <tr><td><strong>内容更新</strong></td><td>平台政策/功能变更导致内容实质性过时</td><td>按需，至少每6个月审查</td></tr>
+    <tr><td><strong>添加"已更新"标记</strong></td><td>小幅补充后</td><td>更新时标注 "[Updated: YYYY-MM]"</td></tr>
+    <tr><td><strong>301 重定向</strong></td><td>内容被新文章完全替代</td><td>按需</td></tr>
+    <tr><td><strong>内部链接刷新</strong></td><td>发布相关新文章后，回链到旧文</td><td>每次发布新内容</td></tr>
+  </tbody>
+</table>
+
+<!-- ==================== SECTION 6: METRICS ==================== -->
+<h2 id="metrics">6. 成功指标 & 跟踪</h2>
+
+<div class="metrics-row">
+  <div class="metric-card">
+    <div class="val">≥27</div>
+    <div class="lbl">12个月内新增文章</div>
+  </div>
+  <div class="metric-card">
+    <div class="val">2篇/月</div>
+    <div class="lbl">稳态产出速度</div>
+  </div>
+  <div class="metric-card">
+    <div class="val">7</div>
+    <div class="lbl">覆盖广告平台数</div>
+  </div>
+  <div class="metric-card">
+    <div class="val">6</div>
+    <div class="lbl">覆盖内容分类数</div>
+  </div>
+</div>
+
+<h3>6.1 核心 KPI (Google Search Console 基准)</h3>
+<table>
+  <thead><tr><th>指标</th><th>当前估算</th><th>6个月目标</th><th>12个月目标</th></tr></thead>
+  <tbody>
+    <tr><td>月度自然点击</td><td>~50-200*</td><td>500</td><td>1,500</td></tr>
+    <tr><td>平均排名</td><td>—</td><td>Top 20 (目标关键词)</td><td>Top 10 (核心关键词)</td></tr>
+    <tr><td>索引页面数</td><td>~53</td><td>63</td><td>80+</td></tr>
+    <tr><td>CTR</td><td>—</td><td>≥2%</td><td>≥3%</td></tr>
+    <tr><td>AdSense 收入</td><td>—</td><td>覆盖成本</td><td>正向收益</td></tr>
+  </tbody>
+</table>
+<p style="font-size:12px;color:var(--muted);">*注：当前为估算值。计划执行第一周应从 GSC 导出准确基线数据。</p>
+
+<h3>6.2 跟踪节奏</h3>
+<table>
+  <thead><tr><th>频率</th><th>动作</th></tr></thead>
+  <tbody>
+    <tr><td><strong>每周</strong></td><td>GSC 检查新文章索引状态；修复未索引页面</td></tr>
+    <tr><td><strong>每月</strong></td><td>GSC 关键词排名变化 + 点击量趋势；AdSense 收益报告</td></tr>
+    <tr><td><strong>每季度</strong></td><td>内容计划进度核查；旧文章审计（是否有内容过时）；内部链接矩阵优化</td></tr>
+    <tr><td><strong>每半年</strong></td><td>竞争站点对标分析；内容策略复盘 + 下半年度计划调整</td></tr>
+  </tbody>
+</table>
+
+<hr style="margin: 40px 0; border: none; border-top: 1px solid var(--border);">
+
+<div style="font-size:13px; color: var(--muted);">
+  <strong>附录：固定栏目规划</strong><br>
+  以下为周期性重复内容，建议设定为自动化提醒：
+  <table style="margin-top: 8px;">
+    <thead><tr><th>栏目</th><th>频率</th><th>固定发布时间</th></tr></thead>
+    <tbody>
+      <tr><td>年度 SEM 行业回顾 & 展望</td><td>年</td><td>每年1月</td></tr>
+      <tr><td>Google Ads 产品更新汇总</td><td>半年</td><td>每年1月 / 7月</td></tr>
+      <tr><td>Microsoft Advertising 产品更新汇总</td><td>半年</td><td>每年1月 / 7月</td></tr>
+      <tr><td>SEM 行业基准数据报告</td><td>年</td><td>每年9月</td></tr>
+      <tr><td>跨境广告投放工具生态盘点</td><td>年</td><td>每年7月</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+</body>
+</html>
