@@ -47,12 +47,12 @@ window.addEventListener('load', function() {
 </script>'''
 
 ART_ALTS = {
-    'folio-strategy.webp': 'An open campaign atlas with a brass navigation dial, green compass and a golden star.',
-    'folio-measurement.webp': 'An open calibration book connected to a cyan oscilloscope, with a golden star above it.',
-    'folio-google.webp': 'A gold star over a campaign spellbook and lime-green search terminal.',
-    'folio-meta.webp': 'An open book of audience connections with a pink lens projector and a golden star.',
-    'folio-microsoft.webp': 'An open technical grimoire beside a blue desktop terminal and a golden star.',
-    'folio-policy.webp': 'A wax-sealed rulebook beside a bronze lock, a keypad and a golden star.',
+    'folio-strategy.webp': 'Pixel-art large golden compass with a pointing needle on a floating rock tile, with a tiny flag and signpost.',
+    'folio-measurement.webp': 'Pixel-art golden crystal data screen showing a rising chart with cyan data points, on a floating rock tile.',
+    'folio-google.webp': 'Pixel-art golden search bar with a four-point star on a floating rock tile, with a tiny flag and treasure chest.',
+    'folio-meta.webp': 'Pixel-art golden speech bubble with three dots and small chat bubbles around it, on a floating rock tile.',
+    'folio-microsoft.webp': 'Pixel-art glowing cyan-blue portal with a golden symbol inside, on a floating rock tile with a tiny flag.',
+    'folio-policy.webp': 'Pixel-art golden gear with a glowing keyhole and cyan energy, on a floating rock tile with a tiny flag.',
 }
 
 # page path -> (data-page, kicker, h1, art file)

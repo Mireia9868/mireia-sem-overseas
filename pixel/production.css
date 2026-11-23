@@ -35,3 +35,16 @@
 /* Legal / About pages: keep long-form copy readable in the dark palette. */
 .article-body .post-alert-info { background: #1d1a32 !important; border-left: 3px solid var(--accent); color: var(--ink); }
 .article-body .post-alert-info a { color: var(--accent); }
+
+/* Inline callouts from legacy posts carried light backgrounds; neutralize them
+   so their text stays readable on the dark pixel palette. Border colour still
+   signals intent (blue=info, amber=warning, red=danger, green=success). */
+.article-body .note-tip { background: #1d1a32 !important; color: var(--ink); }
+.article-body .note-tip strong { color: var(--accent); }
+.article-body .note-tip a { color: var(--accent); }
+.article-body .post-alert { background: #1d1a32 !important; color: var(--ink); }
+
+/* Hide AdSense slots that were not filled: an empty slot leaves a 429px white
+   block that clashes with the dark theme and looks like broken content. */
+.ad-container ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }
+.ad-container:has(ins.adsbygoogle[data-ad-status="unfilled"]) { display: none !important; }
