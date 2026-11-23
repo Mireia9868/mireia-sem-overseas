@@ -1,0 +1,5 @@
+.site-header .brand { min-height: 40px; }
+.article-body :is(h1, h2, h3, h4)[id] { scroll-margin-top: 22px; }
+.article-body :is(td, th) { min-width: 105px; }
+.article-body .post-metas { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 25px; font-size: 14px; }
+.article-body .post-metas .post-meta { display: flex; flex-wrap: wrap; gap: 8px; }
