@@ -463,7 +463,7 @@ window.addEventListener('load', function() {{
       button: {{ background: '#2563eb', text: '#ffffff' }}
     }},
     content: {{
-      message: 'This website uses cookies to ensure you get the best experience on our website.',
+      message: 'This website uses cookies for analytics and advertising. See our Privacy Policy for details.',
       dismiss: 'Got it!',
       link: 'Learn more',
       href: '/privacy-policy/'

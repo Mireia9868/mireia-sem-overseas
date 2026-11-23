@@ -32,6 +32,18 @@ for a in ARTICLES_BATCH1 + ARTICLES_BATCH2:
         'url': f"/{a['date'].replace('-', '/')}/{a['slug']}/"
     })
 
+
+def smart_excerpt(text, maxlen=150):
+    """按完整单词截断摘要，避免从单词中间断开。"""
+    text = html.unescape(re.sub(r'<[^>]+>', '', text)).strip()
+    if len(text) <= maxlen:
+        return html.escape(text)
+    cut = text[:maxlen]
+    last_space = cut.rfind(' ')
+    if last_space > maxlen * 0.6:
+        cut = cut[:last_space]
+    return html.escape(cut.rstrip(' ,;:-')) + '...'
+
 existing_slugs = set(a['slug'] for a in ALL_ARTICLES)
 
 for html_file in sorted(glob.glob(os.path.join(BASE_DIR, '2024/**/index.html'), recursive=True)):
@@ -244,7 +256,7 @@ window.addEventListener('load', function() {
       button: { background: '#2563eb', text: '#ffffff' }
     },
     content: {
-      message: 'This website uses cookies to ensure you get the best experience on our website.',
+      message: 'This website uses cookies for analytics and advertising. See our Privacy Policy for details.',
       dismiss: 'Got it!',
       link: 'Learn more',
       href: '/privacy-policy/'
@@ -314,7 +326,7 @@ def generate_homepage():
       </h1>
       <a class="index-excerpt index-excerpt__noimg" href="{a['url']}" target="_self">
         <div>
-          {html.escape(a['excerpt'][:150])}...
+          {smart_excerpt(a['excerpt'], 150)}
         </div>
       </a>
       <div class="index-btm post-metas">

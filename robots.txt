@@ -8,3 +8,6 @@ Disallow: /local-search.xml
 
 # Sitemap
 Sitemap: https://mireiasem.com/sitemap.xml
+
+# Internal content planning file - not for public indexing
+Disallow: /content-plan-mireiasem.html
