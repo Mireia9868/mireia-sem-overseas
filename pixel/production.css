@@ -44,7 +44,36 @@
 .article-body .note-tip a { color: var(--accent); }
 .article-body .post-alert { background: #1d1a32 !important; color: var(--ink); }
 
-/* Hide AdSense slots that were not filled: an empty slot leaves a 429px white
-   block that clashes with the dark theme and looks like broken content. */
-.ad-container ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }
-.ad-container:has(ins.adsbygoogle[data-ad-status="unfilled"]) { display: none !important; }
+/* Hide AdSense slots that are not filled. Legacy posts name these containers
+   inconsistently — some use id="ad-container-N", others class="ad-container-N" —
+   so the old .ad-container selector matched neither and left a 429px white
+   rectangle visible. Default ALL variants to hidden and only reveal once AdSense
+   explicitly marks the inner <ins> as filled. Covers the pre-response window and
+   blocked-ad cases too. */
+[id^="ad-container"],
+[class^="ad-container"],
+[class*=" ad-container"] { display: none !important; }
+[id^="ad-container"]:has(ins.adsbygoogle[data-ad-status="filled"]),
+[class^="ad-container"]:has(ins.adsbygoogle[data-ad-status="filled"]),
+[class*=" ad-container"]:has(ins.adsbygoogle[data-ad-status="filled"]) { display: block !important; }
+
+/* Legacy articles hard-code light table backgrounds (e.g. #f8f9fa) inline, which
+   overrides the dark theme and leaves pale text on pale cells. Normalise ALL
+   table cells/rows to the dark palette with !important so inline styles cannot win. */
+.article-body table,
+.article-body thead,
+.article-body tbody,
+.article-body tr,
+.article-body th,
+.article-body td {
+  background: #1d1a32 !important;
+  color: var(--ink) !important;
+  border-color: var(--line) !important;
+}
+.article-body thead tr,
+.article-body tr:first-child,
+.article-body th {
+  background: #2a2740 !important;
+  color: var(--accent) !important;
+}
+.article-body th, .article-body td a { color: var(--accent) !important; }
