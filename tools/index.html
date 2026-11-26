@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Campaign QA tools | Mireia SEM</title>
-<meta name="description" content="Build governed UTM links with approved values, format keyword lists and compare purchase event fields in your browser.">
+<meta name="description" content="Build governed UTM links, format keyword lists, check purchase events and convert ad copy to title, sentence, lower or upper case in your browser.">
 <style>
 :root{color-scheme:dark;--bg:#151524;--panel:#1d1b30;--field:#151427;--line:#4c4563;--ink:#f7f3fb;--muted:#c5bdd2;--lime:#d7f984;--gold:#f6d785;--amber:#ffcf7a;--rose:#ffabb8;--mono:ui-monospace,"Courier New",monospace}
 *{box-sizing:border-box}
@@ -37,6 +37,7 @@ h1{font:900 clamp(38px,6.1vw,83px)/.96 var(--mono);letter-spacing:-.075em;margin
 .hero[data-tool="utm"] .led{left:51%}
 .hero[data-tool="keywords"] .led{left:55.6%}
 .hero[data-tool="purchase"] .led{left:59.9%;background:var(--gold);box-shadow:0 0 9px 4px #f6d78580}
+.hero[data-tool="case"] .led{left:64.6%}
 @keyframes pulse{0%,100%{opacity:.28}48%{opacity:.95}}
 .workspace{display:grid;grid-template-columns:minmax(195px,245px) minmax(0,1fr);gap:24px;padding:27px 0 46px;align-items:start}
 .tool-nav{display:flex;flex-direction:column;gap:9px}
@@ -123,6 +124,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--rose
    <button type="button" aria-controls="utm" aria-pressed="true"><span class="icon" aria-hidden="true">↗</span>UTM Builder</button>
    <button type="button" aria-controls="keywords" aria-pressed="false"><span class="icon" aria-hidden="true">[ ]</span>Keyword formatter</button>
    <button type="button" aria-controls="purchase" aria-pressed="false"><span class="icon" aria-hidden="true">{ }</span>Purchase field check</button>
+   <button type="button" aria-controls="case" aria-pressed="false"><span class="icon" aria-hidden="true">Aa</span>Case converter</button>
    <a class="tool-nav-link" href="/tools/us-address/"><span class="icon" aria-hidden="true">⌁</span>Address generator<span class="ext" aria-hidden="true">↗</span></a>
   </nav>
   <section class="panel" id="utm" aria-labelledby="utm-title">
@@ -168,6 +170,33 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--rose
     <div class="actions"><button class="primary">Compare field</button><button class="secondary" id="purchase-example" type="button">Try example</button></div>
    </form>
    <div class="result-box" id="purchase-results" role="status" hidden></div>
+  </section>
+  <section class="panel" id="case" aria-labelledby="case-title" hidden>
+   <h2 id="case-title">Ad copy case converter</h2>
+   <p class="intro">Convert headlines and descriptions to the case Google Ads expects. Four modes, one reversible workspace — nothing leaves this tab.</p>
+   <div class="columns">
+    <div><label for="case-input">Source text</label><textarea id="case-input" placeholder="my ad headline" spellcheck="false"></textarea></div>
+    <div><label for="case-output">Converted text</label><textarea id="case-output" readonly spellcheck="false"></textarea></div>
+   </div>
+   <div class="actions" id="case-modes">
+    <button class="primary" type="button" data-case-mode="title">Title case</button>
+    <button class="secondary" type="button" data-case-mode="sentence">Sentence case</button>
+    <button class="secondary" type="button" data-case-mode="lower">lowercase</button>
+    <button class="secondary" type="button" data-case-mode="upper">UPPERCASE</button>
+   </div>
+   <div class="actions">
+    <button class="secondary" id="case-copy" type="button" disabled>Copy result</button>
+    <button class="secondary" id="case-back" type="button" disabled>Edit result</button>
+    <button class="secondary" id="case-undo" type="button" disabled>Undo</button>
+    <button class="secondary" id="case-restore" type="button" disabled>Original</button>
+    <span class="status" id="case-status" role="status"></span>
+   </div>
+   <div class="result-box">
+    <div class="output-head"><h3>Google Ads writing guide</h3><span class="status">POLICY CHECKED</span></div>
+    <div class="result-row" data-kind="pass"><span aria-hidden="true">✓</span><div><strong>Headlines · title case</strong><small>Capitalize the first letter of each word — "My Ad Headline". This is the case Google recommends for ad headlines.</small></div></div>
+    <div class="result-row" data-kind="pass"><span aria-hidden="true">✓</span><div><strong>Descriptions · sentence case</strong><small>Capitalize only the first letter of each line — "My ad headline". It reads like most organic search results.</small></div></div>
+    <div class="result-row" data-kind="warn"><span aria-hidden="true">!</span><div><strong>Promo copy · avoid all caps</strong><small>Google treats excessive or gimmicky capitalization (FLOWERS, FlOwErS, F.L.O.W.E.R.S) as a policy issue. Unusual caps are generally reserved for common abbreviations such as ASAP, coupon codes, and brand, trademark or product names. If a sale needs emphasis, use a clear offer instead of capitals — and request a policy review in Google Ads when unsure.</small></div></div>
+   </div>
   </section>
  </div>
 </main>
@@ -531,6 +560,81 @@ byId("purchase-form").addEventListener("submit", event => {
   const matches = actual === expected;
   showResults("purchase-results", [[matches ? "pass" : "warn", matches ? "Value matches" : "Value differs", "Captured " + JSON.stringify(actual) + " · Expected " + JSON.stringify(expected)]]);
 });
+
+/* ---- Ad copy case converter: four modes, source text always preserved ---- */
+const caseInput = byId("case-input");
+const caseOutput = byId("case-output");
+const caseHistory = [];
+let caseOriginal = "";
+const caseFns = {
+  title: s => s.replace(/[A-Za-z]+(?:['’][A-Za-z]+)?/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()),
+  sentence: s => s.split("\n").map(line => {
+    const m = line.match(/[A-Za-z]/);
+    if (!m) return line;
+    const i = m.index;
+    return line.slice(0, i) + line[i].toUpperCase() + line.slice(i + 1).toLowerCase();
+  }).join("\n"),
+  lower: s => s.toLowerCase(),
+  upper: s => s.toUpperCase()
+};
+const caseNames = {title: "Title case", sentence: "Sentence case", lower: "lowercase", upper: "UPPERCASE"};
+function refreshCaseButtons() {
+  byId("case-copy").disabled = !caseOutput.value;
+  byId("case-back").disabled = !caseOutput.value;
+  byId("case-undo").disabled = caseHistory.length === 0;
+  byId("case-restore").disabled = !caseOriginal || (!caseOutput.value && caseInput.value === caseOriginal);
+}
+caseInput.addEventListener("input", () => {
+  if (!caseOriginal && caseInput.value) caseOriginal = caseInput.value;
+  refreshCaseButtons();
+});
+for (const button of document.querySelectorAll("[data-case-mode]")) {
+  button.addEventListener("click", () => {
+    const text = caseInput.value;
+    if (!text) { byId("case-status").textContent = "Enter text first."; caseInput.focus(); return; }
+    caseHistory.push(text);
+    if (!caseOriginal) caseOriginal = text;
+    const mode = button.dataset.caseMode;
+    caseOutput.value = caseFns[mode](text);
+    byId("case-status").textContent = caseNames[mode] + " applied.";
+    refreshCaseButtons();
+  });
+}
+byId("case-copy").addEventListener("click", async () => {
+  if (!caseOutput.value) return;
+  try {
+    await navigator.clipboard.writeText(caseOutput.value);
+    byId("case-status").textContent = "Result copied.";
+  } catch {
+    caseOutput.focus();
+    caseOutput.select();
+    byId("case-status").textContent = "Result selected — copy with your browser.";
+  }
+});
+byId("case-back").addEventListener("click", () => {
+  if (!caseOutput.value) return;
+  caseHistory.push(caseInput.value);
+  caseInput.value = caseOutput.value;
+  caseOutput.value = "";
+  byId("case-status").textContent = "Result moved to source. Refine or convert again.";
+  refreshCaseButtons();
+});
+byId("case-undo").addEventListener("click", () => {
+  if (!caseHistory.length) return;
+  caseInput.value = caseHistory.pop();
+  caseOutput.value = "";
+  byId("case-status").textContent = "Undone.";
+  refreshCaseButtons();
+});
+byId("case-restore").addEventListener("click", () => {
+  if (!caseOriginal) return;
+  caseHistory.push(caseInput.value);
+  caseInput.value = caseOriginal;
+  caseOutput.value = "";
+  byId("case-status").textContent = "Original text restored.";
+  refreshCaseButtons();
+});
+refreshCaseButtons();
 </script>
 </body>
 </html>
