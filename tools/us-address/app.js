@@ -600,7 +600,7 @@
       var foot = document.createElement('div');
       foot.className = 'dossier-foot';
       var footL = document.createElement('span');
-      footL.appendChild(document.createTextNode('SUBJECT INDEXED — all fields '));
+      footL.textContent = 'SUBJECT INDEXED — all fields ';
       var footB = document.createElement('b');
       footB.textContent = 'fictional / test only';
       footL.appendChild(footB);
