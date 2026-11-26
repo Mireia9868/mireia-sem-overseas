@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Campaign QA tools | Mireia SEM</title>
-<meta name="description" content="Check campaign URL tags, format keyword lists and compare purchase event fields in your browser.">
+<meta name="description" content="Build governed UTM links with approved values, format keyword lists and compare purchase event fields in your browser.">
 <style>
 :root{color-scheme:dark;--bg:#151524;--panel:#1d1b30;--field:#151427;--line:#4c4563;--ink:#f7f3fb;--muted:#c5bdd2;--lime:#d7f984;--gold:#f6d785;--amber:#ffcf7a;--rose:#ffabb8;--mono:ui-monospace,"Courier New",monospace}
 *{box-sizing:border-box}
@@ -72,6 +72,15 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--rose
 .result-row[data-kind="error"] strong{color:var(--rose)}
 .result-row small{display:block;color:var(--muted);margin-top:2px;font-size:12px}
 .status{color:var(--lime);font:13px var(--mono)}
+.field-hint{display:block;color:var(--muted);font:11px/1.4 var(--mono);margin-top:4px}
+.field-hint[data-state="normalized"]{color:var(--amber)}
+.field-hint[data-state="error"]{color:var(--rose)}
+.output-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
+.output-url{display:block;padding:11px 12px;background:#10101c;border:1px solid var(--line);color:var(--lime);font:13px/1.55 var(--mono);overflow-wrap:anywhere;user-select:all}
+.mini-button{min-height:28px;padding:3px 9px;border:1px solid var(--line);background:transparent;color:var(--gold);font:700 11px var(--mono)}
+.mini-button:hover{border-color:var(--gold)}
+.id-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.id-row code{color:var(--gold);font:13px var(--mono)}
 .site-footer{border-top:1px solid var(--line);color:var(--muted);font:13px var(--mono)}
 .site-footer nav{display:flex;flex-wrap:wrap;gap:14px}
 @media(max-width:760px){
@@ -104,26 +113,41 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--rose
 </header>
 <main>
  <section class="hero" aria-labelledby="page-title" data-tool="utm">
-  <div><h1 id="page-title">Campaign QA<br>tools</h1><p class="lead">Check your setup before launch.</p><p class="privacy">Your inputs stay in this browser tab.</p></div>
+  <div><h1 id="page-title">Campaign QA<br>tools</h1><p class="lead">Build governed links before launch.</p><p class="privacy">Your inputs stay in this browser tab.</p></div>
   <div class="artbox">
    <figure class="art" aria-hidden="true"><img src="/pixel/tools-hero.webp" width="1536" height="1024" decoding="async" alt=""><div class="screen"><div class="beam"></div></div><div class="led"></div></figure>
   </div>
  </section>
  <div class="workspace" id="tools">
   <nav class="tool-nav" aria-label="Campaign QA tools">
-   <button type="button" aria-controls="utm" aria-pressed="true"><span class="icon" aria-hidden="true">↗</span>URL checker</button>
+   <button type="button" aria-controls="utm" aria-pressed="true"><span class="icon" aria-hidden="true">↗</span>UTM Builder</button>
    <button type="button" aria-controls="keywords" aria-pressed="false"><span class="icon" aria-hidden="true">[ ]</span>Keyword formatter</button>
    <button type="button" aria-controls="purchase" aria-pressed="false"><span class="icon" aria-hidden="true">{ }</span>Purchase field check</button>
    <a class="tool-nav-link" href="/tools/us-address/"><span class="icon" aria-hidden="true">⌁</span>US address generator<span class="ext" aria-hidden="true">↗</span></a>
   </nav>
   <section class="panel" id="utm" aria-labelledby="utm-title">
-   <h2 id="utm-title">Campaign URL checker</h2>
-   <p class="intro">Check source, medium, campaign, and duplicate UTM fields in a tagged destination URL.</p>
-   <form id="url-form" novalidate>
-    <div class="inline"><div><label for="destination">Destination URL</label><input id="destination" type="url" placeholder="https://example.com/?utm_source=…" autocomplete="off" spellcheck="false"></div><button class="primary">Check tags</button></div>
-    <div class="actions"><button class="secondary" id="url-example" type="button">Try example</button></div>
-   </form>
-   <div class="result-box" id="url-results" role="status" hidden></div>
+   <h2 id="utm-title">UTM Builder</h2>
+   <p class="intro">Pick a governance model, choose approved values, and the tagged URL assembles itself. Nothing is saved.</p>
+   <div class="columns">
+    <div><label for="model">Governance model</label><select id="model"></select></div>
+    <div><label for="destination">Destination URL</label><input id="destination" type="url" placeholder="https://example.com/landing" autocomplete="off" spellcheck="false"></div>
+   </div>
+   <p class="note" id="model-note"></p>
+   <div class="columns group-gap" id="utm-fields"></div>
+   <div class="actions">
+    <button class="secondary" id="utm-example" type="button">Try example</button>
+    <button class="secondary" id="copy-url" type="button" disabled>Copy URL</button>
+    <span class="status" id="utm-status" role="status"></span>
+   </div>
+   <div class="result-box" id="utm-output" hidden>
+    <div class="output-head"><h3>Tagged URL</h3><span class="status" id="utm-ready"></span></div>
+    <code class="output-url" id="utm-built-url"></code>
+    <div class="result-row" id="utm-id-row">
+     <span aria-hidden="true">#</span>
+     <div><strong>Campaign ID</strong><small class="id-row"><code id="utm-campaign-id"></code><button class="mini-button" id="new-id" type="button">New ID</button></small></div>
+    </div>
+    <div id="utm-checks"></div>
+   </div>
   </section>
   <section class="panel" id="keywords" aria-labelledby="keywords-title" hidden>
    <h2 id="keywords-title">Keyword match formatter</h2>
@@ -190,44 +214,259 @@ function showResults(id, rows) {
   container.hidden = false;
 }
 
-byId("url-example").addEventListener("click", () => {
-  byId("destination").value = "https://example.com/?utm_source=google&utm_medium=cpc&utm_content=a&utm_content=b";
-  byId("url-form").requestSubmit();
-});
-byId("url-form").addEventListener("submit", event => {
-  event.preventDefault();
-  const input = byId("destination");
-  input.removeAttribute("aria-invalid");
-  let url;
-  try {
-    url = new URL(input.value.trim());
-    if (!["http:", "https:"].includes(url.protocol)) throw new Error();
-  } catch {
-    input.setAttribute("aria-invalid", "true");
-    showResults("url-results", [["error", "Enter a full HTTP or HTTPS URL."]]);
-    return;
+/* ---- Governed UTM builder: picklists, conditional rules, computed URL ---- */
+const SOURCES = {
+  cpc: ["google", "bing", "meta"],
+  paid_social: ["linkedin", "meta", "tiktok"],
+  social: ["linkedin", "facebook", "instagram", "tiktok"],
+  email: ["newsletter", "lifecycle"],
+  display: ["dv360", "criteo"],
+  referral: ["partner_site", "review_site"],
+  affiliate: ["impact", "partnerstack"]
+};
+const MEDIUMS = Object.keys(SOURCES);
+const STAGE = {label:"Stage", type:"select", required:true, options:["awareness","consideration","conversion"]};
+const PRODUCT_B2B = {label:"Product", type:"select", required:true, options:["platform","pro","starter","enterprise"]};
+const FUNNEL = {label:"Funnel", type:"select", required:true, options:["tofu","mofu","bofu"]};
+const QUARTER = {label:"Quarter", type:"select", required:true, options:["q1","q2","q3","q4"]};
+const REGION_B2B = {label:"Region", type:"select", required:true, options:["na","emea","apac"]};
+const MEDIUM_FIELD = {key:"medium", label:"Medium", type:"select", required:true, options:MEDIUMS};
+const SOURCE_FIELD = {key:"source", label:"Source", type:"select", required:true, optionsFor:"medium"};
+
+const MODELS = {
+  simple: {
+    label:"Simple UTM Starter",
+    note:"Flat lower_snake campaign names. Medium filters which sources are allowed.",
+    fields:[
+      MEDIUM_FIELD, SOURCE_FIELD,
+      {key:"campaign", label:"Campaign name", type:"text", required:true, normalize:"snake"},
+      {key:"content", label:"Content (optional)", type:"text", normalize:"snake", param:"utm_content"}
+    ],
+    example:{destination:"https://mireiasem.com/tools/", medium:"cpc", source:"google", campaign:"summer sale 2026", content:""}
+  },
+  b2b: {
+    label:"B2B Demand-Gen Standard",
+    note:"Positional names: stage, product, funnel, quarter and region. Medium filters source.",
+    fields:[MEDIUM_FIELD, SOURCE_FIELD, STAGE, PRODUCT_B2B, FUNNEL, QUARTER, REGION_B2B],
+    compose:v => [v.stage, v.product, v.funnel, v.quarter, v.region].filter(Boolean).join("-"),
+    example:{destination:"https://mireiasem.com/tools/", medium:"paid_social", source:"linkedin", stage:"awareness", product:"platform", funnel:"tofu", quarter:"q2", region:"emea"}
+  },
+  ecommerce: {
+    label:"Ecommerce Performance",
+    note:"Positional retail names: objective, category, season, year and region.",
+    fields:[
+      MEDIUM_FIELD, SOURCE_FIELD,
+      {key:"objective", label:"Objective", type:"select", required:true, options:["acquisition","retention"]},
+      {key:"category", label:"Category", type:"select", required:true, options:["apparel","electronics","home"]},
+      {key:"season", label:"Season", type:"select", required:true, options:["spring","summer","fall","winter"]},
+      {key:"year", label:"Year", type:"select", required:true, options:["2026","2027"]},
+      {key:"region", label:"Region", type:"select", required:true, options:["us","de","fr","jp","kr"]}
+    ],
+    compose:v => [v.objective, v.category, v.season, v.year, v.region].filter(Boolean).join("_"),
+    example:{destination:"https://mireiasem.com/tools/", medium:"cpc", source:"google", objective:"acquisition", category:"apparel", season:"spring", year:"2026", region:"us"}
+  },
+  enterprise: {
+    label:"Enterprise Multi-BU",
+    note:"Self-labeling key-value names that stay readable across business units.",
+    fields:[
+      MEDIUM_FIELD, SOURCE_FIELD,
+      {key:"bu", label:"Business unit", type:"select", required:true, options:["na","emea","apac"]},
+      {key:"product", label:"Product", type:"select", required:true, options:["saas","api","console"]},
+      {key:"goal", label:"Goal", type:"select", required:true, options:["signup","trial","demo"]}
+    ],
+    compose:v => ["bu-"+v.bu, "prod-"+v.product, "goal-"+v.goal].filter(part => !part.includes("undefined")).join("_"),
+    example:{destination:"https://mireiasem.com/tools/", medium:"email", source:"newsletter", bu:"emea", product:"saas", goal:"trial"}
   }
-  const params = url.searchParams;
+};
+
+function normalizeValue(value, mode) {
+  if (mode !== "snake") return value.trim();
+  return value.trim().toLowerCase()
+    .replace(/[\s\-/]+/g, "_")
+    .replace(/[^a-z0-9_]/g, "")
+    .replace(/_+/g, "_")
+    .replace(/^_|_$/g, "");
+}
+function newCampaignId() {
+  const bytes = new Uint8Array(5);
+  crypto.getRandomValues(bytes);
+  return "trm" + [...bytes].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+function syncSources() {
+  const source = byId("utm-f-source");
+  if (!source) return;
+  const medium = byId("utm-f-medium")?.value || "";
+  const allowed = SOURCES[medium] || [];
+  const previous = source.value;
+  source.replaceChildren();
+  const blank = document.createElement("option");
+  blank.value = "";
+  blank.textContent = medium ? "Choose…" : "Pick medium first";
+  source.append(blank);
+  for (const value of allowed) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = value;
+    source.append(option);
+  }
+  if (allowed.includes(previous)) source.value = previous;
+}
+function renderFields() {
+  const model = MODELS[byId("model").value];
+  byId("model-note").textContent = model.note;
+  const container = byId("utm-fields");
+  container.replaceChildren();
+  for (const field of model.fields) {
+    const wrap = document.createElement("div");
+    const id = "utm-f-" + field.key;
+    const label = document.createElement("label");
+    label.htmlFor = id;
+    label.textContent = field.label + (field.required ? " *" : "");
+    wrap.append(label);
+    let control;
+    if (field.type === "select") {
+      control = document.createElement("select");
+      control.id = id;
+      const blank = document.createElement("option");
+      blank.value = "";
+      blank.textContent = "Choose…";
+      control.append(blank);
+      for (const value of field.options || []) {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+        control.append(option);
+      }
+    } else {
+      control = document.createElement("input");
+      control.id = id;
+      control.type = "text";
+      control.autocomplete = "off";
+      control.spellcheck = false;
+      control.placeholder = field.normalize === "snake" ? "lowercase_with_underscores" : "value";
+    }
+    wrap.append(control);
+    const hint = document.createElement("small");
+    hint.className = "field-hint";
+    hint.id = id + "-hint";
+    if (field.normalize === "snake") hint.textContent = "lowercase + underscores";
+    wrap.append(hint);
+    container.append(wrap);
+  }
+  syncSources();
+  build();
+}
+function build() {
+  const model = MODELS[byId("model").value];
+  const values = {};
   const rows = [];
-  const required = {utm_source: "Source", utm_medium: "Medium", utm_campaign: "Campaign"};
-  for (const [key, name] of Object.entries(required)) {
-    const value = params.get(key)?.trim();
-    rows.push(value ? ["pass", name + " found", key + "=" + value] : ["warn", name + " missing or empty", key]);
+  for (const field of model.fields) {
+    const control = byId("utm-f-" + field.key);
+    const raw = control.value;
+    let value = raw;
+    const hint = byId("utm-f-" + field.key + "-hint");
+    if (field.normalize && raw) {
+      value = normalizeValue(raw, field.normalize);
+      if (value !== raw && hint) {
+        hint.textContent = "Normalized to " + value;
+        hint.dataset.state = "normalized";
+      } else if (hint) {
+        hint.textContent = "lowercase + underscores";
+        hint.dataset.state = "";
+      }
+    }
+    control.removeAttribute("aria-invalid");
+    if (field.required && !value) {
+      control.setAttribute("aria-invalid", "true");
+      rows.push(["error", field.label + " is required", "Pick or enter an approved value"]);
+    }
+    values[field.key] = value;
   }
-  const counts = new Map();
-  for (const key of params.keys()) {
-    const normalized = key.toLowerCase();
-    if (!normalized.startsWith("utm_")) continue;
-    counts.set(normalized, (counts.get(normalized) ?? 0) + 1);
+  const destInput = byId("destination");
+  let url = null;
+  try {
+    url = new URL(destInput.value.trim());
+    if (!["http:", "https:"].includes(url.protocol)) throw new Error();
+    destInput.removeAttribute("aria-invalid");
+  } catch {
+    destInput.setAttribute("aria-invalid", "true");
+    rows.push(["error", "Destination URL", "Enter a full HTTP or HTTPS URL"]);
   }
-  for (const key of new Set(params.keys())) {
-    if (key.toLowerCase().startsWith("utm_") && key !== key.toLowerCase()) rows.push(["warn", "Check capitalization", key]);
+  if (values.medium && values.source && !(SOURCES[values.medium] || []).includes(values.source)) {
+    rows.push(["error", "Source not allowed for " + values.medium, "Allowed: " + (SOURCES[values.medium] || []).join(", ")]);
   }
-  for (const [key, count] of counts) {
-    if (count > 1) rows.push(["warn", "Repeated UTM field", key + " appears " + count + " times"]);
+  const campaign = model.compose ? model.compose(values) : values.campaign;
+  if (campaign && !model.compose && !/^[a-z0-9][a-z0-9_]*$/.test(campaign)) {
+    rows.push(["error", "Campaign name format", "Lowercase letters, numbers and underscores only"]);
   }
-  if (rows.every(row => row[0] === "pass")) rows.push(["pass", "No duplicate UTM fields found"]);
-  showResults("url-results", rows);
+  const ready = rows.length === 0 && Boolean(url && campaign);
+  byId("utm-output").hidden = false;
+  const status = byId("utm-ready");
+  status.textContent = ready ? "VALID · READY TO LAUNCH" : "CHECK FIELDS";
+  status.style.color = ready ? "var(--lime)" : "var(--amber)";
+  byId("copy-url").disabled = !ready;
+  byId("utm-status").textContent = ready ? "Assembled live" : "";
+  if (ready) {
+    const params = url.searchParams;
+    for (const key of [...params.keys()]) if (key.toLowerCase().startsWith("utm_")) params.delete(key);
+    params.set("utm_source", values.source);
+    params.set("utm_medium", values.medium);
+    params.set("utm_campaign", campaign);
+    params.set("utm_id", byId("utm-campaign-id").textContent);
+    if (values.content) params.set("utm_content", normalizeValue(values.content, "snake"));
+    byId("utm-built-url").textContent = url.toString();
+  } else {
+    byId("utm-built-url").textContent = "—";
+  }
+  const checks = ready
+    ? [["pass", "All required fields valid", "Medium → source dependency respected"], ["pass", "Campaign name conforms to the model", campaign]]
+    : rows;
+  showResults("utm-checks", checks);
+}
+for (const [key, model] of Object.entries(MODELS)) {
+  const option = document.createElement("option");
+  option.value = key;
+  option.textContent = model.label;
+  byId("model").append(option);
+}
+byId("utm-campaign-id").textContent = newCampaignId();
+renderFields();
+byId("utm-fields").addEventListener("input", build);
+byId("utm-fields").addEventListener("change", event => {
+  if (event.target.id === "utm-f-medium") syncSources();
+  build();
+});
+byId("destination").addEventListener("input", build);
+byId("model").addEventListener("change", renderFields);
+byId("new-id").addEventListener("click", () => {
+  byId("utm-campaign-id").textContent = newCampaignId();
+  build();
+});
+byId("utm-example").addEventListener("click", () => {
+  const model = MODELS[byId("model").value];
+  byId("destination").value = model.example.destination;
+  for (const [key, value] of Object.entries(model.example)) {
+    if (key === "destination") continue;
+    const control = byId("utm-f-" + key);
+    if (control) control.value = value;
+  }
+  syncSources();
+  build();
+});
+byId("copy-url").addEventListener("click", async () => {
+  const text = byId("utm-built-url").textContent;
+  if (!text || text === "—") return;
+  try {
+    await navigator.clipboard.writeText(text);
+    byId("utm-status").textContent = "URL copied.";
+  } catch {
+    const range = document.createRange();
+    range.selectNodeContents(byId("utm-built-url"));
+    const selection = getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    byId("utm-status").textContent = "URL selected — copy with your browser.";
+  }
 });
 
 byId("keyword-form").addEventListener("submit", event => {
