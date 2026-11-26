@@ -1,8 +1,45 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Campaign QA tools | Mireia SEM</title><meta name="description" content="Check campaign URL tags, format keyword lists and compare purchase event fields locally."><style>
-*{box-sizing:border-box}body{max-width:52rem;margin:auto;padding:2rem 1rem;background:#101c27;color:#edf5ed;font:1rem/1.55 system-ui}a{color:#8fead1}section{border-top:1px solid #617078;padding:1.2rem 0}label,textarea,output{display:block}textarea,input,select,button{font:inherit;padding:.55rem;border-radius:.35rem}textarea{width:100%;min-height:6rem}button{margin:.75rem 0;background:#a5f3cf;color:#102921;cursor:pointer}output{white-space:pre-wrap;overflow-wrap:anywhere}input{max-width:100%}
-</style></head><body><a href="/">← Mireia SEM</a><h1>Campaign QA tools</h1><p>Your inputs stay in this browser tab.</p>
-<section id="utm"><h2>Campaign URL checker</h2><p>Paste a tagged destination URL to check source, medium, campaign and duplicate UTM fields.</p><label>Destination URL<input id="url" type="url" placeholder="https://example.com/?utm_source=…"></label><button id="check">Check tags</button><output id="tags" aria-live="polite"></output></section>
-<section id="keywords"><h2>Keyword match formatter</h2><label>Plain keywords, one per line<textarea id="words"></textarea></label><label>Match type <select id="match"><option>Exact</option><option>Phrase</option><option>Broad</option></select></label><button id="format">Format keywords</button><label>Formatted list (duplicates removed)<textarea readonly id="list"></textarea></label></section>
-<section id="purchase"><h2>Purchase field spot check</h2><p>Paste one JSON object and enter the field path for your platform or custom mapping. For example, use ecommerce.transaction_id for a data layer object with an ecommerce section. Check the path in your implementation first. This compares the captured payload only.</p><label>Captured JSON<textarea id="payload"></textarea></label><label>Field path <input id="path" placeholder="ecommerce.tax"></label><label>Expected JSON value <input id="expected" placeholder='0 or "USD"'></label><button id="compare">Compare field</button><output id="result" aria-live="polite"></output></section>
-<script src="tools.js"></script></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Campaign QA tools | Mireia SEM</title>
+<meta name="description" content="Check campaign URL tags, format keyword lists and compare purchase event fields locally.">
+<meta name="theme-color" content="#151426">
+<link rel="icon" href="/img/Mireia%20Sem_transparent.png">
+<link rel="canonical" href="https://mireiasem.com/tools/">
+<link rel="stylesheet" href="/pixel/fonts.css">
+<link rel="stylesheet" href="/pixel/style.css">
+<style>
+body[data-design="pixel"]{--control:var(--mono)}
+.tool-shell{width:min(52rem,calc(100% - 112px));margin-inline:auto;padding-block:2.5rem 4rem}
+.tool-back{display:inline-block;font:500 14px/1.3 var(--control);color:var(--accent)}
+.tool-back:hover{text-decoration:underline;text-underline-offset:4px}
+.tool-head{margin-block:26px 27px}
+.tool-head h1{font:400 clamp(2.4rem,5vw,3.5rem)/1 var(--display);letter-spacing:-.03em}
+.tool-head p{margin-top:14px;color:var(--muted);font:500 14px/1.4 var(--control)}
+.tool-panel{border-top:1px solid var(--line);padding-block:1.4rem}
+.tool-panel h2{font:600 1.15rem/1.3 var(--sans);margin-bottom:8px}
+.tool-panel>p{color:var(--muted);margin-bottom:14px;font-size:14px}
+.tool-panel label{display:block;margin-top:12px;font:500 14px/1.4 var(--control)}
+.tool-panel input,.tool-panel textarea,.tool-panel select{display:block;width:100%;max-width:100%;margin-top:6px;padding:10px 12px;border:1px solid var(--line);border-radius:0;background:#1b1931;color:var(--ink);font:14px/1.5 var(--mono)}
+.tool-panel textarea{min-height:6rem;resize:vertical}
+.tool-panel select{width:auto}
+.tool-panel button{display:inline-flex;align-items:center;justify-content:center;min-height:42px;margin:14px 0 4px;padding:9px 16px;border:1px solid var(--accent);background:transparent;color:var(--accent);font:600 14px/1.35 var(--control);transition:background .18s,color .18s}
+.tool-panel button:hover{color:var(--paper);background:var(--accent)}
+.tool-panel output{display:block;white-space:pre-wrap;overflow-wrap:anywhere;min-height:1.5em;margin-top:8px;color:var(--muted);font:14px/1.5 var(--mono)}
+@media(max-width:640px){.tool-shell{width:calc(100% - 2rem)}}
+</style>
+</head>
+<body data-design="pixel" data-page="tools">
+<header class="site-header shell"><a class="brand" href="/"><img class="brand-star" src="/pixel/mireia-star.png" width="28" height="28" alt="">Mireia SEM</a><nav class="site-nav" aria-label="Main navigation"><a href="/#articles">Articles</a><a href="/archives/">Archive</a><a href="/tools/" aria-current="page">Tools</a><a href="/contact/">Contact</a></nav></header>
+<main id="main" class="tool-shell">
+<div class="tool-head"><a class="tool-back" href="/">← Mireia SEM</a><h1>Campaign QA tools</h1><p>Your inputs stay in this browser tab.</p></div>
+<section class="tool-panel" id="utm"><h2>Campaign URL checker</h2><p>Paste a tagged destination URL to check source, medium, campaign and duplicate UTM fields.</p><label>Destination URL<input id="url" type="url" placeholder="https://example.com/?utm_source=…"></label><button id="check">Check tags</button><output id="tags" aria-live="polite"></output></section>
+<section class="tool-panel" id="keywords"><h2>Keyword match formatter</h2><label>Plain keywords, one per line<textarea id="words"></textarea></label><label>Match type <select id="match"><option>Exact</option><option>Phrase</option><option>Broad</option></select></label><button id="format">Format keywords</button><label>Formatted list (duplicates removed)<textarea readonly id="list"></textarea></label></section>
+<section class="tool-panel" id="purchase"><h2>Purchase field spot check</h2><p>Paste one JSON object and enter the field path for your platform or custom mapping. For example, use ecommerce.transaction_id for a data layer object with an ecommerce section. Check the path in your implementation first. This compares the captured payload only.</p><label>Captured JSON<textarea id="payload"></textarea></label><label>Field path <input id="path" placeholder="ecommerce.tax"></label><label>Expected JSON value <input id="expected" placeholder='0 or "USD"'></label><button id="compare">Compare field</button><output id="result" aria-live="polite"></output></section>
+</main>
+<footer class="site-footer shell"><span>© Mireia SEM</span></footer>
+<script src="tools.js"></script>
+</body>
+</html>
