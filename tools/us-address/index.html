@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>US Test Address Generator | Mireia SEM</title>
-<meta name="description" content="Generate fictional US addresses and identity fields for form testing, QA and development. Optional tax-free state filtering.">
+<title>Test Address Generator | Mireia SEM</title>
+<meta name="description" content="Generate one fictional address for 18 countries for form testing, QA and development. Optional US tax-free state filtering.">
 <meta name="theme-color" content="#131324">
 <link rel="icon" href="/img/Mireia%20Sem_transparent.png">
 <link rel="canonical" href="https://mireiasem.com/tools/us-address/">
@@ -17,7 +17,7 @@ body[data-design="pixel"]{--control:var(--mono)}
 .tool-back:hover{text-decoration:underline;text-underline-offset:4px}
 .crumbs{margin-bottom:26px}
 .hero-row{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:40px;align-items:center;margin-bottom:30px}
-.tool-head h1{font:700 clamp(2.6rem,5vw,3.4rem)/1.04 var(--display);letter-spacing:-.03em;margin-top:10px}
+.tool-head h1{font:700 clamp(2.4rem,4.6vw,3.2rem)/1.04 var(--display);letter-spacing:-.03em;margin-top:10px}
 .tool-head p{color:var(--muted);font:500 14px/1.55 var(--control);margin-top:12px;max-width:62ch}
 .kicker{font:500 11px/1.4 var(--control);color:var(--accent);letter-spacing:.09em;text-transform:uppercase}
 .local-badge{border:1px solid var(--line);border-radius:6px;background:#1b1931;padding:18px}
@@ -31,10 +31,9 @@ body[data-design="pixel"]{--control:var(--mono)}
 .step-chip{padding:6px 10px;border-radius:3px;background:#2c2a45;color:var(--accent);font:500 11px/1 var(--control);white-space:nowrap}
 .panel-desc{margin:14px 0 18px;color:var(--muted);font:400 13px/1.55 var(--mono)}
 .panel-divider{height:1px;background:var(--line);margin-bottom:18px}
-.controls{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:16px}
+.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .ctrl label{display:block;margin-bottom:8px;color:var(--muted);font:500 11px/1.4 var(--control);letter-spacing:.05em}
-.ctrl select,.ctrl input[type=number]{display:block;width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:#24213b;color:var(--ink);font:400 13px/1.5 var(--mono)}
-.ctrl select:disabled{opacity:.6}
+.ctrl select{display:block;width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:#24213b;color:var(--ink);font:400 13px/1.5 var(--mono)}
 .hint{color:var(--muted);font:400 12px/1.4 var(--control);margin-top:8px}
 .checkrow{display:flex;align-items:center;gap:10px;margin-top:16px;color:var(--ink);font:500 13px/1.4 var(--control);cursor:pointer}
 .checkrow input{width:18px;height:18px;accent-color:var(--accent)}
@@ -60,36 +59,33 @@ body[data-design="pixel"]{--control:var(--mono)}
 .count-badge{padding:5px 9px;border-radius:3px;background:#2c2a45;color:var(--accent);font:500 10px/1 var(--control);white-space:nowrap}
 .results-head button{min-height:36px;padding:6px 14px;font-size:12px}
 .empty-state{margin:0;padding:28px;border:1px dashed var(--line);border-radius:4px;color:var(--muted);font:400 13px/1.5 var(--mono);text-align:center}
-#output{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
-#output .empty-state{grid-column:1/-1}
-.record{border:1px solid var(--line);border-radius:4px;background:#1b1931;padding:16px;min-width:0}
-.record h3{margin:0 0 10px;color:var(--accent);font:500 11px/1.4 var(--control);letter-spacing:.05em}
-.record dl{margin:0}
-.record .row{display:grid;grid-template-columns:minmax(0,1fr);gap:1px;padding:6px 0;border-top:1px dashed var(--line)}
-.record .row:first-child{border-top:0}
-.record .row summary{cursor:pointer;color:var(--muted);font:500 10px/1.4 var(--control)}
-.record details{margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
+#output{max-width:760px}
+.record{border:1px solid var(--line);border-radius:4px;background:#1b1931;padding:20px 22px}
+.record h3{margin:0 0 14px;color:var(--accent);font:500 12px/1.4 var(--control);letter-spacing:.05em}
+.record dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
+.record .row{display:grid;grid-template-columns:minmax(0,1fr);gap:1px;padding:8px 0;border-top:1px dashed var(--line)}
+.record .row:first-child{border-top:1px dashed var(--line)}
 dt{color:var(--muted);font:500 10px/1.4 var(--control)}
 dd{margin:0;color:var(--ink);font:400 12px/1.5 var(--mono);overflow-wrap:anywhere}
 .copy-one{min-height:24px;margin:5px 0 0;padding:2px 8px;border:1px solid var(--line);border-radius:3px;background:transparent;color:var(--muted);font:500 11px/1.2 var(--control);cursor:pointer}
 .copy-one:hover{border-color:var(--accent);color:var(--accent)}
 .notice{margin-top:26px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:4px;padding:14px 16px;color:var(--muted);font:400 12px/1.6 var(--mono)}
 .notice strong{color:var(--ink)}
+[hidden]{display:none!important}
 @media(max-width:1050px){
   .hero-row{grid-template-columns:1fr;gap:22px}
   .local-badge{max-width:520px}
   .workspace{grid-template-columns:1fr}
-  #output{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:640px){
   .tool-shell{width:calc(100% - 2rem);padding-block:1.5rem 3rem}
   .panel{padding:18px}
   .controls{grid-template-columns:1fr}
+  .record dl{grid-template-columns:1fr}
   .actions button.primary{flex:1 1 100%}
   .actions button:not(.primary){flex:1 1 auto}
   .results-head{align-items:flex-start}
   .results-head button{flex:0 0 auto}
-  #output{grid-template-columns:1fr}
   .site-header{align-items:flex-start;flex-direction:column;justify-content:center;gap:12px;padding-block:14px}
 }
 </style>
@@ -102,8 +98,8 @@ dd{margin:0;color:var(--ink);font:400 12px/1.5 var(--mono);overflow-wrap:anywher
 <div class="hero-row">
   <div class="tool-head">
     <p class="kicker">Free tool / Generator 01</p>
-    <h1>US Test Address Generator</h1>
-    <p>Fictional addresses for form filling, QA and development. Nothing is sent to a server.</p>
+    <h1>Test Address Generator</h1>
+    <p>One fictional address per tap across 18 countries for form filling, QA and development. Nothing is sent to a server.</p>
   </div>
   <aside class="local-badge" aria-label="Local only">
     <div class="badge-top">
@@ -120,30 +116,30 @@ dd{margin:0;color:var(--ink);font:400 12px/1.5 var(--mono);overflow-wrap:anywher
       <h2 id="generate-title">Generate</h2>
       <span class="step-chip">01 / CONFIGURE</span>
     </div>
-    <p class="panel-desc">Pick a state or filter to the five tax-free states (AK, DE, MT, NH, OR). City, ZIP prefix and phone area code are matched to the selected state.</p>
+    <p class="panel-desc">Choose a country and optionally a region. City, postal code and phone area code are matched to the region you pick.</p>
     <div class="panel-divider"></div>
     <div class="controls">
       <div class="ctrl">
-        <label for="state">STATE</label>
-        <select id="state"></select>
-        <div class="hint" id="count"></div>
+        <label for="country">COUNTRY</label>
+        <select id="country"></select>
       </div>
       <div class="ctrl">
-        <label for="quantity">HOW MANY RECORDS</label>
-        <input id="quantity" type="number" min="1" max="25" value="3">
+        <label for="zone">REGION</label>
+        <select id="zone"></select>
+        <div class="hint" id="count"></div>
       </div>
     </div>
-    <label class="checkrow"><input id="freeOnly" type="checkbox"> Only tax-free states (AK, DE, MT, NH, OR)</label>
+    <label class="checkrow" id="freeRow"><input id="freeOnly" type="checkbox"> Only US tax-free states (AK, DE, MT, NH, OR)</label>
     <div class="actions">
       <button id="generate" class="primary" type="button">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9 1L3 9H7L6 15L13 6H8.5L9 1Z" fill="#131324"/></svg>
-        Generate
+        Generate one
       </button>
       <button id="copyAll" class="secondary" type="button" disabled>Copy all</button>
       <button id="exportJson" class="secondary" type="button" disabled>Export JSON</button>
       <button id="exportCsv" class="secondary" type="button" disabled>Export CSV</button>
     </div>
-    <div class="status" id="status" aria-live="polite">Ready — 3 records will be generated</div>
+    <div class="status" id="status" aria-live="polite">Ready — one record will be generated</div>
   </section>
 
   <aside class="panel panel--info" aria-label="What's included">
@@ -152,19 +148,19 @@ dd{margin:0;color:var(--ink);font:400 12px/1.5 var(--mono);overflow-wrap:anywher
     <div class="info-list">
       <div class="info-item">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 16S14 11.5 14 7A5 5 0 0 0 4 7c0 4.5 5 9 5 9Z" stroke="#D6F982" stroke-width="1.3"/><circle cx="9" cy="7" r="1.6" stroke="#D6F982" stroke-width="1.3"/></svg>
-        <div><h3>State-matched details</h3><p>City, ZIP prefix and area code align with the state you pick.</p></div>
+        <div><h3>Region-matched details</h3><p>City, postal code and area code align with the region you pick.</p></div>
       </div>
       <div class="info-item">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M2 3H16L10.5 9.5V15L7.5 16.5V9.5L2 3Z" stroke="#D6F982" stroke-width="1.3" stroke-linejoin="miter"/></svg>
-        <div><h3>Tax-free filter</h3><p>One toggle limits results to Alaska, Delaware, Montana, New Hampshire and Oregon.</p></div>
+        <div><h3>18 countries</h3><p>US, UK, France, Germany, Japan, Korea, Canada, Australia and more. Tap Generate for a fresh record.</p></div>
       </div>
       <div class="info-item">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2V12M5 8.5L9 12.5L13 8.5" stroke="#D6F982" stroke-width="1.3"/><path d="M3 15H15" stroke="#D6F982" stroke-width="1.3"/></svg>
-        <div><h3>Copy or export</h3><p>Grab one record or download all of them as JSON or CSV.</p></div>
+        <div><h3>Copy or export</h3><p>Grab the record or download it as JSON or CSV.</p></div>
       </div>
     </div>
     <div class="panel-divider"></div>
-    <p class="chips-label">Tax-free states</p>
+    <p class="chips-label">US tax-free states</p>
     <div class="state-chips"><span>AK</span><span>DE</span><span>MT</span><span>NH</span><span>OR</span></div>
   </aside>
 </div>
@@ -172,15 +168,15 @@ dd{margin:0;color:var(--ink);font:400 12px/1.5 var(--mono);overflow-wrap:anywher
 <section class="results" aria-labelledby="results-title">
   <div class="results-head">
     <div class="results-title-group">
-      <h2 id="results-title">Generated records</h2>
-      <span class="count-badge" id="recordCount">0 RECORDS</span>
+      <h2 id="results-title">Generated record</h2>
+      <span class="count-badge" id="recordCount">0 RECORD</span>
     </div>
     <button id="copyAllBottom" type="button" disabled>Copy all</button>
   </div>
-  <div id="output"><p class="empty-state">Set your options and press Generate to see records here.</p></div>
+  <div id="output"><p class="empty-state">Set your options and press Generate to see a record here.</p></div>
 </section>
 
-<aside class="notice"><strong>Test data only.</strong> All names, addresses and contact details are fictional. SSN uses SSA-reserved (never issued) prefixes and card numbers are public non-functional test values. Do not use this data for real accounts, purchases, tax avoidance, identity claims or any unlawful purpose.</aside>
+<aside class="notice"><strong>Test data only.</strong> All names, addresses and contact details are fictional. SSN uses SSA-reserved (never issued) prefixes, other national IDs are marked TEST, and card numbers are public non-functional test values. Do not use this data for real accounts, purchases, tax avoidance, identity claims or any unlawful purpose.</aside>
 </main>
 <footer class="site-footer shell"><span>© Mireia SEM</span></footer>
 <script src="app.js"></script>
