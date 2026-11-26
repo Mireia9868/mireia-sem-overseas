@@ -72,6 +72,29 @@ dt{color:var(--muted);font:500 10px/1.4 var(--control)}
 dd{margin:0;color:var(--ink);font:400 12px/1.5 var(--mono);overflow-wrap:anywhere}
 .copy-one{min-height:24px;margin:5px 0 0;padding:2px 8px;border:1px solid var(--line);border-radius:3px;background:transparent;color:var(--muted);font:500 11px/1.2 var(--control);cursor:pointer}
 .copy-one:hover{border-color:var(--accent);color:var(--accent)}
+/* fictional identity dossier — one card per generated record */
+.record.dossier{padding:0;overflow:hidden;position:relative}
+.record.dossier::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(214,249,130,.03) 0 1px,transparent 1px 4px)}
+.dossier-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 18px;background:#24213b;border-bottom:1px solid var(--line);font:500 11px/1 var(--control);letter-spacing:.06em;color:var(--muted);position:relative;z-index:1}
+.dossier-top .dossier-id{color:var(--accent)}
+.dossier-main{display:grid;grid-template-columns:200px minmax(0,1fr);gap:22px;padding:20px;position:relative;z-index:1}
+.dossier-photo{position:relative;aspect-ratio:512/704;background:#141225;border:1px solid var(--line);border-radius:3px;overflow:hidden;align-self:start;max-width:220px}
+.dossier-photo img{width:100%;height:100%;object-fit:cover;display:block;image-rendering:pixelated}
+.dossier-photo .corner{position:absolute;width:12px;height:12px;border-color:var(--accent);border-style:solid;opacity:.85}
+.dossier-photo .c1{top:6px;left:6px;border-width:2px 0 0 2px}
+.dossier-photo .c2{top:6px;right:6px;border-width:2px 2px 0 0}
+.dossier-photo .c3{bottom:6px;left:6px;border-width:0 0 2px 2px}
+.dossier-photo .c4{bottom:6px;right:6px;border-width:0 2px 2px 0}
+.dossier-photo .stamp{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);white-space:nowrap;font:600 9px/1 var(--control);letter-spacing:.08em;color:var(--paper);background:var(--accent);padding:4px 8px;border-radius:2px}
+.dossier-info h3{margin:0 0 14px;color:var(--accent);font:600 14px/1.35 var(--control);letter-spacing:.02em}
+.dossier-info dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 22px}
+.dossier-foot{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font:400 10px/1.4 var(--control);color:var(--muted);position:relative;z-index:1}
+.dossier-foot b{color:var(--accent)}
+@media(max-width:640px){
+  .dossier-main{grid-template-columns:1fr}
+  .dossier-photo{max-width:180px;margin-inline:auto}
+}
+@media(max-width:520px){.dossier-info dl{grid-template-columns:1fr}}
 .notice{margin-top:26px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:4px;padding:14px 16px;color:var(--muted);font:400 12px/1.6 var(--mono)}
 .notice strong{color:var(--ink)}
 [hidden]{display:none!important}
@@ -195,13 +218,13 @@ dd{margin:0;color:var(--ink);font:400 12px/1.5 var(--mono);overflow-wrap:anywher
     </div>
     <button id="copyAllBottom" type="button" disabled>Copy all</button>
   </div>
-  <div id="output"><p class="empty-state">Set your options and press Generate to see a record here.</p></div>
+  <div id="output"><p class="empty-state">Set your options and press Generate to see a fictional identity dossier here.</p></div>
 </section>
 
 <aside class="notice"><strong>Test data only.</strong> All names, addresses and contact details are fictional. SSN uses SSA-reserved (never issued) prefixes, other national IDs are marked TEST, and card numbers are public non-functional test values. Do not use this data for real accounts, purchases, tax avoidance, identity claims or any unlawful purpose.</aside>
 </main>
 <footer class="site-footer shell"><span>© Mireia SEM</span></footer>
-<script src="app.js?v=2"></script><!-- bump ?v when app.js changes: CDN caches it for 4h -->
+<script src="app.js?v=3"></script><!-- bump ?v when app.js changes: CDN caches it for 4h -->
 <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
 <script>
 window.addEventListener('load', function() {

@@ -84,6 +84,15 @@
   ];
   var EMAIL_DOMAINS = ['example.com','example.net','example.org','testmail.example'];
 
+  // Fictional identity portraits — each record gets one at random.
+  var AVATARS = [
+    { src: '/img/aliens/qmark-pixel.png', name: 'Unknown' },
+    { src: '/img/aliens/octopus-suit.png', name: 'Inky' },
+    { src: '/img/aliens/cyborg-a.png', name: 'Unit-9' },
+    { src: '/img/aliens/nebula-a.png', name: 'Nebula' },
+    { src: '/img/aliens/human-b.png', name: 'Office Worker' }
+  ];
+
   // ---------- helpers ----------
   function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
   function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
@@ -423,6 +432,8 @@
     rec._country = country.code;
     rec._taxFree = zone[2] === 1;
     rec._labels = { region: country.regionLabel, regionCode: country.regionCodeLabel, postal: country.postalLabel };
+    rec._avatar = pick(AVATARS);
+    rec._dossierId = '#' + (country.code === 'US' ? 'US' : country.code) + '-' + pad(rnd(1, 999), 3);
     return rec;
   }
 
@@ -487,7 +498,7 @@
       currentCountry = countrySel.value;
       syncFreeUI();
       lastRecord = null;
-      if (output) output.innerHTML = '<p class="empty-state">Settings changed. Press Generate for a new record.</p>';
+      if (output) output.innerHTML = '<p class="empty-state">Settings changed. Press Generate for a new dossier.</p>';
       var badge = document.getElementById('recordCount');
       if (badge) badge.textContent = '0 RECORD';
       var status = document.getElementById('status');
@@ -524,10 +535,47 @@
     function render(rec) {
       output.innerHTML = '';
       var card = document.createElement('article');
-      card.className = 'record';
+      card.className = 'record dossier';
+
+      // dossier header — case id + clearance label
+      var top = document.createElement('div');
+      top.className = 'dossier-top';
+      var caseId = document.createElement('span');
+      caseId.className = 'dossier-id';
+      caseId.textContent = rec._dossierId;
+      var clearance = document.createElement('span');
+      clearance.textContent = 'FICTIONAL IDENTITY / TEST DATA';
+      top.appendChild(caseId);
+      top.appendChild(clearance);
+      card.appendChild(top);
+
+      var main = document.createElement('div');
+      main.className = 'dossier-main';
+
+      // portrait with framing corners
+      var photo = document.createElement('div');
+      photo.className = 'dossier-photo';
+      var img = document.createElement('img');
+      img.src = rec._avatar.src;
+      img.alt = 'Fictional portrait: ' + rec._avatar.name;
+      photo.appendChild(img);
+      ['c1', 'c2', 'c3', 'c4'].forEach(function (c) {
+        var corner = document.createElement('span');
+        corner.className = 'corner ' + c;
+        photo.appendChild(corner);
+      });
+      var stamp = document.createElement('span');
+      stamp.className = 'stamp';
+      stamp.textContent = rec._avatar.name.toUpperCase();
+      photo.appendChild(stamp);
+      main.appendChild(photo);
+
+      // address fields, same as before
+      var info = document.createElement('div');
+      info.className = 'dossier-info';
       var head = document.createElement('h3');
       head.textContent = COUNTRY_BY_CODE[rec._country].name + (rec._taxFree ? ' · Tax-free region' : '');
-      card.appendChild(head);
+      info.appendChild(head);
       var dl = document.createElement('dl');
       fieldKeys(rec).forEach(function (key) {
         var row = document.createElement('div');
@@ -545,7 +593,23 @@
         row.appendChild(dt); row.appendChild(dd);
         dl.appendChild(row);
       });
-      card.appendChild(dl);
+      info.appendChild(dl);
+      main.appendChild(info);
+      card.appendChild(main);
+
+      var foot = document.createElement('div');
+      foot.className = 'dossier-foot';
+      var footL = document.createElement('span');
+      footL.appendChild(document.createTextNode('SUBJECT INDEXED — all fields '));
+      var footB = document.createElement('b');
+      footB.textContent = 'fictional / test only';
+      footL.appendChild(footB);
+      var footR = document.createElement('span');
+      footR.textContent = 'DOSSIER ' + rec._dossierId + ' // TEST ADDRESS GENERATOR';
+      foot.appendChild(footL);
+      foot.appendChild(footR);
+      card.appendChild(foot);
+
       output.appendChild(card);
     }
 
