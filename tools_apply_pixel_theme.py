@@ -33,8 +33,8 @@ COOKIE = '''<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cook
 window.addEventListener('load', function() {
   window.cookieconsent.initialise({
     palette: {
-      popup: { background: '#2f4154' },
-      button: { background: '#2563eb', text: '#ffffff' }
+      popup: { background: '#1d1b30', text: '#f7f3fb', link: '#d7f984' },
+      button: { background: '#d7f984', text: '#151524' }
     },
     content: {
       message: 'This website uses cookies for analytics and advertising. See our Privacy Policy for details.',

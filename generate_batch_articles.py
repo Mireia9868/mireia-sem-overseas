@@ -260,7 +260,7 @@ def generate_article_html(article, all_articles):
 <meta name="google-adsense-account" content="{ADSENSE_PUB_ID}">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ADSENSE_PUB_ID}"
      crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"><style>.cc-window,.cc-revoke{font-family:var(--mono,ui-monospace,SFMono-Regular,Menlo,monospace)!important}.cc-btn,.cc-link{font-family:inherit!important}.cc-link{opacity:1!important}</style>
 </head>
 
 <body>
@@ -460,8 +460,8 @@ def generate_article_html(article, all_articles):
 window.addEventListener('load', function() {{
   window.cookieconsent.initialise({{
     palette: {{
-      popup: {{ background: '#2f4154' }},
-      button: {{ background: '#2563eb', text: '#ffffff' }}
+      popup: {{ background: '#1d1b30', text: '#f7f3fb', link: '#d7f984' }},
+      button: {{ background: '#d7f984', text: '#151524' }}
     }},
     content: {{
       message: 'This website uses cookies for analytics and advertising. See our Privacy Policy for details.',

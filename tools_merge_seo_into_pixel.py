@@ -23,14 +23,14 @@ OG_TAG = f'<meta property="og:image" content="{OG_URL}">'
 TW_TAG = f'<meta name="twitter:image" content="{OG_URL}">'
 DIM_TAG = ('<meta property="og:image:width" content="1200">\n'
            '<meta property="og:image:height" content="630">')
-CC_CSS = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">'
+CC_CSS = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"><style>.cc-window,.cc-revoke{font-family:var(--mono,ui-monospace,SFMono-Regular,Menlo,monospace)!important}.cc-btn,.cc-link{font-family:inherit!important}.cc-link{opacity:1!important}</style>'
 CC_JS = """<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
 <script>
 window.addEventListener('load', function() {
   window.cookieconsent.initialise({
     palette: {
-      popup: { background: '#2f4154' },
-      button: { background: '#2563eb', text: '#ffffff' }
+      popup: { background: '#1d1b30', text: '#f7f3fb', link: '#d7f984' },
+      button: { background: '#d7f984', text: '#151524' }
     },
     content: {
       message: 'This website uses cookies for analytics and advertising. See our Privacy Policy for details.',
