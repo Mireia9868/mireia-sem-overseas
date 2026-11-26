@@ -177,30 +177,52 @@
 
     function render(records) {
       output.innerHTML = '';
+      var recordCount = document.getElementById('recordCount');
+      if (recordCount) recordCount.textContent = records.length + (records.length === 1 ? ' RECORD' : ' RECORDS');
+      ['copyAll', 'exportJson', 'exportCsv', 'copyAllBottom'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.disabled = false;
+      });
+      function makeRow(key, value) {
+        var row = document.createElement('div');
+        row.className = 'row';
+        var dt = document.createElement('dt');
+        dt.textContent = key;
+        var dd = document.createElement('dd');
+        dd.textContent = value;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'copy-one';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function () { copyText(String(value)); flash(btn); });
+        dd.appendChild(btn);
+        row.appendChild(dt); row.appendChild(dd);
+        return row;
+      }
+
       records.forEach(function (rec, idx) {
         var card = document.createElement('article');
         card.className = 'record';
         var head = document.createElement('h3');
         head.textContent = 'Record ' + (idx + 1) + (rec._taxFree ? ' · Tax-free state' : '');
         card.appendChild(head);
-        var dl = document.createElement('dl');
-        FIELDS.forEach(function (key) {
-          var row = document.createElement('div');
-          row.className = 'row';
-          var dt = document.createElement('dt');
-          dt.textContent = key;
-          var dd = document.createElement('dd');
-          dd.textContent = rec[key];
-          var btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'copy-one';
-          btn.textContent = 'Copy';
-          btn.addEventListener('click', function () { copyText(String(rec[key])); flash(btn); });
-          dd.appendChild(btn);
-          row.appendChild(dt); row.appendChild(dd);
-          dl.appendChild(row);
-        });
-        card.appendChild(dl);
+
+        var summary = document.createElement('dl');
+        summary.appendChild(makeRow('Full Name', rec['Full Name']));
+        summary.appendChild(makeRow('Street Address', rec['Street Address']));
+        summary.appendChild(makeRow('City / State / ZIP', rec['City'] + ', ' + rec['State Code'] + ' ' + rec['ZIP Code']));
+        summary.appendChild(makeRow('Phone', rec['Phone']));
+        summary.appendChild(makeRow('Email', rec['Email']));
+        card.appendChild(summary);
+
+        var details = document.createElement('details');
+        var detailsSummary = document.createElement('summary');
+        detailsSummary.textContent = 'All 16 fields';
+        details.appendChild(detailsSummary);
+        var full = document.createElement('dl');
+        FIELDS.forEach(function (key) { full.appendChild(makeRow(key, rec[key])); });
+        details.appendChild(full);
+        card.appendChild(details);
         output.appendChild(card);
       });
     }
@@ -258,10 +280,13 @@
     });
 
     var copyAll = document.getElementById('copyAll');
-    if (copyAll) copyAll.addEventListener('click', function () {
+    var copyAllBottom = document.getElementById('copyAllBottom');
+    function handleCopyAll(btn) {
       if (!window._records) return;
-      copyText(asText(window._records)); flash(copyAll);
-    });
+      copyText(asText(window._records)); flash(btn);
+    }
+    if (copyAll) copyAll.addEventListener('click', function () { handleCopyAll(copyAll); });
+    if (copyAllBottom) copyAllBottom.addEventListener('click', function () { handleCopyAll(copyAllBottom); });
     var expJson = document.getElementById('exportJson');
     if (expJson) expJson.addEventListener('click', function () {
       if (!window._records) return;
