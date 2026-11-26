@@ -26,6 +26,9 @@ body[data-design="pixel"]{--control:var(--mono)}
 .workspace{display:grid;grid-template-columns:minmax(0,700fr) minmax(0,450fr);gap:20px;align-items:start}
 .panel{border:1px solid var(--line);border-radius:6px;background:#1b1931;padding:28px}
 .panel--info{background:#19182c}
+.guide-panel{margin-top:20px}
+.guide-panel .info-list{margin-top:18px}
+.guide-panel .info-item h3{color:var(--accent)}
 .panel-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .panel h2,.results-title-group h2{margin:0;font:600 21px/1.3 var(--sans);color:var(--ink)}
 .step-chip{padding:6px 10px;border-radius:3px;background:#2c2a45;color:var(--accent);font:500 11px/1 var(--control);white-space:nowrap}
@@ -165,6 +168,24 @@ dd{margin:0;color:var(--ink);font:400 12px/1.5 var(--mono);overflow-wrap:anywher
     <div class="state-chips"><span>AK</span><span>DE</span><span>MT</span><span>NH</span><span>OR</span></div>
   </aside>
 </div>
+
+<section class="panel guide-panel" aria-labelledby="guide-title">
+  <div class="panel-head"><h2 id="guide-title">Use this tool</h2><span class="step-chip">QUICK GUIDE</span></div>
+  <div class="info-list">
+    <div class="info-item">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 16S14 11.5 14 7A5 5 0 0 0 4 7c0 4.5 5 9 5 9Z" stroke="#D6F982" stroke-width="1.3"/><circle cx="9" cy="7" r="1.6" stroke="#D6F982" stroke-width="1.3"/></svg>
+      <div><h3>Use when</h3><p>Tracking code is deployed and you need realistic-looking form data to confirm the conversion fires and the fields arrive correctly.</p></div>
+    </div>
+    <div class="info-item">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M2 3H16L10.5 9.5V15L7.5 16.5V9.5L2 3Z" stroke="#D6F982" stroke-width="1.3" stroke-linejoin="miter"/></svg>
+      <div><h3>Best practice</h3><p>Run the test in your platform's test or sandbox mode first. Use the generated details as filling reference, then check the captured event in your analytics or tag debugger before going live. If tax calculation blocks a test order in the US, tick the no-state-sales-tax option and pick Delaware or Oregon.</p></div>
+    </div>
+    <div class="info-item">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2V12M5 8.5L9 12.5L13 8.5" stroke="#D6F982" stroke-width="1.3"/><path d="M3 15H15" stroke="#D6F982" stroke-width="1.3"/></svg>
+      <div><h3>Watch out</h3><p>All records are fictional; card numbers are public non-functional test values and the SSN uses an SSA-reserved prefix. Never use them for real accounts. The no-state-sales-tax filter applies to the US only; Alaska and Montana can still have local taxes.</p></div>
+    </div>
+  </div>
+</section>
 
 <section class="results" aria-labelledby="results-title">
   <div class="results-head">

@@ -72,6 +72,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--rose
 .result-row[data-kind="warn"] strong{color:var(--amber)}
 .result-row[data-kind="error"] strong{color:var(--rose)}
 .result-row small{display:block;color:var(--muted);margin-top:2px;font-size:12px}
+.guide-box code{color:var(--gold);font:12px var(--mono)}
 .status{color:var(--lime);font:13px var(--mono)}
 .field-hint{display:block;color:var(--muted);font:11px/1.4 var(--mono);margin-top:4px}
 .field-hint[data-state="normalized"]{color:var(--amber)}
@@ -131,6 +132,12 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--rose
   <section class="panel" id="utm" aria-labelledby="utm-title">
    <h2 id="utm-title">UTM Builder</h2>
    <p class="intro">Pick a governance model, choose approved values, and the tagged URL assembles itself. Nothing is saved.</p>
+   <div class="result-box guide-box">
+    <div class="output-head"><h3>Use this tool</h3><span class="status">QUICK GUIDE</span></div>
+    <div class="result-row" data-kind="pass"><span aria-hidden="true">✓</span><div><strong>Use when</strong><small>You need a tagged destination URL for a paid channel, and want the naming convention to stay identical across campaigns and teammates.</small></div></div>
+    <div class="result-row" data-kind="pass"><span aria-hidden="true">✓</span><div><strong>Best practice</strong><small>Keep one naming rule for every paid channel, but give each platform its own <code>utm_source</code> value so reporting can separate them. Fill <code>utm_source</code>, <code>utm_medium</code> and <code>utm_campaign</code> together — missing parameters show up as <code>(not set)</code>. Use lowercase with underscores, then paste the finished URL straight from the builder.</small></div></div>
+    <div class="result-row" data-kind="warn"><span aria-hidden="true">!</span><div><strong>Watch out</strong><small>UTM values are case-sensitive (<code>Facebook</code> and <code>facebook</code> are different values). UTM parameters are appended to the destination URL, so do not put personal information in them.</small></div></div>
+   </div>
    <div class="columns">
     <div><label for="model">Governance model</label><select id="model"></select></div>
     <div><label for="destination">Destination URL</label><input id="destination" type="url" placeholder="https://example.com/landing" autocomplete="off" spellcheck="false"></div>
@@ -155,6 +162,12 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--rose
   <section class="panel" id="keywords" aria-labelledby="keywords-title" hidden>
    <h2 id="keywords-title">Keyword match formatter</h2>
    <p class="intro">Format one keyword per line as exact, phrase, or broad match. Duplicate lines are removed.</p>
+   <div class="result-box guide-box">
+    <div class="output-head"><h3>Use this tool</h3><span class="status">QUICK GUIDE</span></div>
+    <div class="result-row" data-kind="pass"><span aria-hidden="true">✓</span><div><strong>Use when</strong><small>You have a raw keyword list and need to apply exact, phrase or broad match consistently before upload.</small></div></div>
+    <div class="result-row" data-kind="pass"><span aria-hidden="true">✓</span><div><strong>Best practice</strong><small>Exact <code>[keyword]</code> gives the tightest control and the smallest reach. Phrase <code>"keyword"</code> catches queries that contain the keyword's meaning. Broad <code>keyword</code> reaches the most queries, including synonyms and misspellings, and spends budget fastest — pair it with smart bidding. Use negative keywords to cut irrelevant queries, and group keywords by ad group theme.</small></div></div>
+    <div class="result-row" data-kind="warn"><span aria-hidden="true">!</span><div><strong>Watch out</strong><small>Match types overlap: broad already covers phrase and exact. Avoid creating all three versions of the same keyword — near-duplicate broad keywords are treated as duplicates in the same auction.</small></div></div>
+   </div>
    <form id="keyword-form" novalidate>
     <div class="columns"><div><label for="words">Plain keywords</label><textarea id="words" placeholder="website builder&#10;landing page builder" spellcheck="false"></textarea></div><div><label for="formatted">Formatted list</label><textarea id="formatted" readonly spellcheck="false"></textarea></div></div>
     <div class="group-gap"><label for="match">Match type</label><select id="match"><option value="exact">Exact · [keyword]</option><option value="phrase">Phrase · &quot;keyword&quot;</option><option value="broad">Broad · keyword</option></select></div>
@@ -164,6 +177,12 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--rose
   <section class="panel" id="purchase" aria-labelledby="purchase-title" hidden>
    <h2 id="purchase-title">Purchase field spot check</h2>
    <p class="intro">Compare one field in a captured JSON object with your expected value. Use the field path from your implementation.</p>
+   <div class="result-box guide-box">
+    <div class="output-head"><h3>Use this tool</h3><span class="status">QUICK GUIDE</span></div>
+    <div class="result-row" data-kind="pass"><span aria-hidden="true">✓</span><div><strong>Use when</strong><small>A conversion is firing but the value, currency or transaction ID looks wrong in the reporting platform.</small></div></div>
+    <div class="result-row" data-kind="pass"><span aria-hidden="true">✓</span><div><strong>Best practice</strong><small>Capture one real event payload, paste it in, then check the exact field path your implementation writes. Compare one field at a time until the mapping is confirmed, then repeat for value, currency and transaction ID.</small></div></div>
+    <div class="result-row" data-kind="warn"><span aria-hidden="true">!</span><div><strong>Watch out</strong><small>Text values need double quotes in the expected field — <code>49</code> and <code>"49"</code> are different JSON types. This checks the pasted sample only, not a live connection.</small></div></div>
+   </div>
    <form id="purchase-form" novalidate>
     <label for="payload">Captured JSON</label><textarea id="payload" placeholder='{"ecommerce":{"transaction_id":"ORDER-101"}}' spellcheck="false"></textarea>
     <div class="columns group-gap"><div><label for="path">Field path</label><input id="path" placeholder="ecommerce.transaction_id" spellcheck="false"></div><div><label for="expected">Expected JSON value</label><input id="expected" placeholder='"ORDER-101"' spellcheck="false"></div></div>
@@ -175,6 +194,12 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--rose
   <section class="panel" id="case" aria-labelledby="case-title" hidden>
    <h2 id="case-title">Ad copy case converter</h2>
    <p class="intro">Convert headlines and descriptions to the case Google Ads expects. Four modes, one reversible workspace — nothing leaves this tab.</p>
+   <div class="result-box guide-box">
+    <div class="output-head"><h3>Use this tool</h3><span class="status">QUICK GUIDE</span></div>
+    <div class="result-row" data-kind="pass"><span aria-hidden="true">✓</span><div><strong>Use when</strong><small>You are moving headlines and descriptions between ad platforms and need consistent casing.</small></div></div>
+    <div class="result-row" data-kind="pass"><span aria-hidden="true">✓</span><div><strong>Best practice</strong><small>Use title case for headlines and sentence case for descriptions. Keep the original text and use Undo / Original when comparing variants.</small></div></div>
+    <div class="result-row" data-kind="warn"><span aria-hidden="true">!</span><div><strong>Watch out</strong><small>Avoid all caps in ad copy; Google treats excessive or gimmicky capitalization as a policy issue.</small></div></div>
+   </div>
    <div class="columns">
     <div><label for="case-input">Source text</label><textarea id="case-input" placeholder="my ad headline" spellcheck="false"></textarea></div>
     <div><label for="case-output">Converted text</label><textarea id="case-output" readonly spellcheck="false"></textarea></div>
@@ -193,7 +218,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--rose
     <span class="status" id="case-status" role="status"></span>
    </div>
    <div class="result-box">
-    <div class="output-head"><h3>Google Ads writing guide</h3><span class="status">POLICY CHECKED</span></div>
+    <div class="output-head"><h3>Google Ads writing rules</h3><span class="status">POLICY CHECKED</span></div>
     <div class="result-row" data-kind="pass"><span aria-hidden="true">✓</span><div><strong>Headlines · title case</strong><small>Capitalize the first letter of each word — "My Ad Headline". This is the case Google recommends for ad headlines.</small></div></div>
     <div class="result-row" data-kind="pass"><span aria-hidden="true">✓</span><div><strong>Descriptions · sentence case</strong><small>Capitalize only the first letter of each line — "My ad headline". It reads like most organic search results.</small></div></div>
     <div class="result-row" data-kind="warn"><span aria-hidden="true">!</span><div><strong>Promo copy · avoid all caps</strong><small>Google treats excessive or gimmicky capitalization (FLOWERS, FlOwErS, F.L.O.W.E.R.S) as a policy issue. Unusual caps are generally reserved for common abbreviations such as ASAP, coupon codes, and brand, trademark or product names. If a sale needs emphasis, use a clear offer instead of capitals — and request a policy review in Google Ads when unsure.</small></div></div>
@@ -217,6 +242,12 @@ for (const button of navButtons) {
       byId(panel).hidden = panel !== selected;
     }
   });
+}
+// Deep links from articles: /tools/#keywords, /tools/#case, etc.
+const deepLinkedTool = location.hash.slice(1);
+if (deepLinkedTool) {
+  const deepLinkTarget = navButtons.find(b => b.getAttribute("aria-controls") === deepLinkedTool);
+  if (deepLinkTarget) deepLinkTarget.click();
 }
 function showResults(id, rows) {
   const container = byId(id);
