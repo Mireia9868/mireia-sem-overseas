@@ -24,7 +24,7 @@ PIXEL_HEAD = '''<link rel="stylesheet" href="/pixel/fonts.css">
 <script src="/pixel/site.js" defer></script>'''
 
 BRAND = '''<a class="brand" href="/"><img class="brand-star" src="/pixel/mireia-star.png" width="28" height="28" alt="">Mireia SEM</a>
-<nav class="site-nav" aria-label="Main navigation"><a href="/#articles">Articles</a><a href="/archives/">Archive</a><a href="/contact/">Contact</a></nav>'''
+<nav class="site-nav" aria-label="Main navigation"><a href="/#articles">Articles</a><a href="/archives/">Archive</a> <a href="/tools/">Tools</a><a href="/contact/">Contact</a></nav>'''
 
 FOOTER = '''<footer class="site-footer shell"><span>&copy; Mireia SEM</span>
 <nav aria-label="Site information"><a href="/about/">About</a><a href="/privacy-policy/">Privacy Policy</a><a href="/terms/">Terms</a><a href="/contact/">Contact</a><a href="/sitemap.xml">Sitemap</a></nav></footer>'''

@@ -276,6 +276,7 @@ def generate_article_html(article, all_articles):
       <ul class="navbar-nav ml-auto text-center">
             <li class="nav-item"><a class="nav-link" href="{rel_root}"><i class="iconfont icon-home-fill"></i> Home</a></li>
             <li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> Archives</a></li>
+            <li class="nav-item"><a class="nav-link" href="/tools/"><i class="iconfont icon-code"></i> Tools</a></li>
             <li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> Categories</a></li>
             <li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> Tags</a></li>
             <li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> About</a></li>

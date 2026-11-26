@@ -146,6 +146,12 @@ def make_nav(home_link=""):
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="/tools/">
+                <i class="iconfont icon-code"></i>
+                Tools
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="/categories/">
                 <i class="iconfont icon-category-fill"></i>
                 Categories
