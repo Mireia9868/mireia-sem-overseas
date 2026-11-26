@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>US Test Address Generator | Mireia SEM</title>
+<meta name="description" content="Generate fictional US addresses and identity fields for form testing, QA and development. Optional tax-free state filtering.">
+<meta name="theme-color" content="#151426">
+<link rel="icon" href="/img/Mireia%20Sem_transparent.png">
+<link rel="canonical" href="https://mireiasem.com/tools/us-address/">
+<link rel="stylesheet" href="/pixel/fonts.css">
+<link rel="stylesheet" href="/pixel/style.css">
+<style>
+body[data-design="pixel"]{--control:var(--mono)}
+.tool-shell{width:min(60rem,calc(100% - 112px));margin-inline:auto;padding-block:2.5rem 4rem}
+.tool-back{display:inline-block;font:500 14px/1.3 var(--control);color:var(--accent)}
+.tool-back:hover{text-decoration:underline;text-underline-offset:4px}
+.tool-head{margin-block:26px 27px}
+.tool-head h1{font:400 clamp(2.2rem,5vw,3.4rem)/1 var(--display);letter-spacing:-.03em}
+.tool-head p{margin-top:14px;color:var(--muted);font:500 14px/1.5 var(--control)}
+.notice{border:1px solid var(--line);border-left:3px solid var(--accent);padding:14px 16px;margin-bottom:8px;font-size:14px;color:var(--muted);background:rgba(214,249,130,.04)}
+.notice strong{color:var(--ink)}
+.tool-panel{border-top:1px solid var(--line);padding-block:1.4rem}
+.tool-panel h2{font:600 1.15rem/1.3 var(--sans);margin-bottom:8px}
+.tool-panel>p{color:var(--muted);margin-bottom:14px;font-size:14px}
+.controls{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:12px}
+.ctrl label{display:block;font:500 14px/1.4 var(--control);margin-bottom:6px}
+.ctrl select,.ctrl input[type=number]{display:block;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:0;background:#1b1931;color:var(--ink);font:14px/1.5 var(--mono)}
+.ctrl select:disabled{opacity:.6}
+.checkrow{display:flex;align-items:center;gap:10px;font:500 14px/1.4 var(--control);color:var(--ink);margin-top:4px}
+.checkrow input{width:18px;height:18px;accent-color:var(--accent)}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 4px}
+.tool-panel button,.actions button{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:9px 16px;border:1px solid var(--accent);background:transparent;color:var(--accent);font:600 14px/1.35 var(--control);cursor:pointer;transition:background .18s,color .18s}
+.tool-panel button:hover,.actions button:hover{color:var(--paper);background:var(--accent)}
+.actions button.secondary{border-color:var(--line);color:var(--muted)}
+.actions button.secondary:hover{border-color:var(--accent);color:var(--paper)}
+.status{color:var(--muted);font:500 13px/1.4 var(--control);margin-top:10px;min-height:1em}
+#output{margin-top:20px}
+.record{border:1px solid var(--line);padding:16px 18px;margin-bottom:16px}
+.record h3{font:600 15px/1.3 var(--control);color:var(--accent);margin-bottom:12px}
+dl{margin:0}
+.row{display:grid;grid-template-columns:200px 1fr;gap:12px;padding:7px 0;border-top:1px dashed var(--line)}
+.row:first-child{border-top:0}
+dt{color:var(--muted);font:500 13px/1.5 var(--control)}
+dd{margin:0;color:var(--ink);font:14px/1.5 var(--mono);overflow-wrap:anywhere}
+.copy-one{min-height:26px;margin-left:10px;padding:2px 9px;font-size:12px;border-color:var(--line);color:var(--muted)}
+@media(max-width:640px){.tool-shell{width:calc(100% - 2rem)}.row{grid-template-columns:1fr;gap:2px}}
+</style>
+</head>
+<body data-design="pixel" data-page="tools">
+<header class="site-header shell"><a class="brand" href="/"><img class="brand-star" src="/pixel/mireia-star.png" width="28" height="28" alt="">Mireia SEM</a><nav class="site-nav" aria-label="Main navigation"><a href="/#articles">Articles</a><a href="/archives/">Archive</a><a href="/tools/" aria-current="page">Tools</a><a href="/contact/">Contact</a></nav></header>
+<main id="main" class="tool-shell">
+<div class="tool-head"><a class="tool-back" href="/tools/">← All tools</a><h1>US Test Address Generator</h1><p>Fictional addresses for form filling, QA and development. Nothing is sent to a server.</p></div>
+
+<div class="notice"><strong>Test data only.</strong> All names, addresses and contact details are fictional. SSN uses SSA-reserved (never issued) prefixes and card numbers are public non-functional test values. Do not use this data for real accounts, purchases, tax avoidance, identity claims or any unlawful purpose.</div>
+
+<section class="tool-panel">
+  <h2>Generate</h2>
+  <p>Pick a state or filter to the five tax-free states (AK, DE, MT, NH, OR). City, ZIP prefix and phone area code are matched to the selected state.</p>
+  <div class="controls">
+    <div class="ctrl"><label for="state">State</label><select id="state"></select><div class="hint" id="count"></div></div>
+    <div class="ctrl"><label for="quantity">How many records</label><input id="quantity" type="number" min="1" max="25" value="3"></div>
+  </div>
+  <label class="checkrow"><input id="freeOnly" type="checkbox"> Only tax-free states (AK, DE, MT, NH, OR)</label>
+  <div class="actions">
+    <button id="generate" type="button">Generate</button>
+    <button id="copyAll" class="secondary" type="button">Copy all</button>
+    <button id="exportJson" class="secondary" type="button">Export JSON</button>
+    <button id="exportCsv" class="secondary" type="button">Export CSV</button>
+  </div>
+  <div class="status" id="status" aria-live="polite"></div>
+  <div id="output"></div>
+</section>
+</main>
+<footer class="site-footer shell"><span>© Mireia SEM</span></footer>
+<script src="app.js"></script>
+</body>
+</html>

@@ -28,13 +28,23 @@ body[data-design="pixel"]{--control:var(--mono)}
 .tool-panel button{display:inline-flex;align-items:center;justify-content:center;min-height:42px;margin:14px 0 4px;padding:9px 16px;border:1px solid var(--accent);background:transparent;color:var(--accent);font:600 14px/1.35 var(--control);transition:background .18s,color .18s}
 .tool-panel button:hover{color:var(--paper);background:var(--accent)}
 .tool-panel output{display:block;white-space:pre-wrap;overflow-wrap:anywhere;min-height:1.5em;margin-top:8px;color:var(--muted);font:14px/1.5 var(--mono)}
-@media(max-width:640px){.tool-shell{width:calc(100% - 2rem)}}
+.tool-index{border:1px solid var(--line);padding:16px 18px;margin-bottom:6px}
+.tool-index h2{font:600 1.05rem/1.3 var(--sans);margin-bottom:10px}
+.tool-link{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 14px;border:1px solid var(--line);margin-top:8px;text-decoration:none;transition:border-color .18s,background .18s}
+.tool-link:hover{border-color:var(--accent);background:rgba(214,249,130,.05)}
+.tool-link .tl-name{font:600 15px/1.3 var(--control);color:var(--ink)}
+.tool-link .tl-desc{font:13px/1.45 var(--sans);color:var(--muted);margin-top:3px}
+.tool-link .tl-go{font:600 14px/1.3 var(--control);color:var(--accent);white-space:nowrap}
+@media(max-width:640px){.tool-shell{width:calc(100% - 2rem)}.tool-link{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body data-design="pixel" data-page="tools">
 <header class="site-header shell"><a class="brand" href="/"><img class="brand-star" src="/pixel/mireia-star.png" width="28" height="28" alt="">Mireia SEM</a><nav class="site-nav" aria-label="Main navigation"><a href="/#articles">Articles</a><a href="/archives/">Archive</a><a href="/tools/" aria-current="page">Tools</a><a href="/contact/">Contact</a></nav></header>
 <main id="main" class="tool-shell">
 <div class="tool-head"><a class="tool-back" href="/">← Mireia SEM</a><h1>Campaign QA tools</h1><p>Your inputs stay in this browser tab.</p></div>
+<div class="tool-index"><h2>More tools</h2>
+<a class="tool-link" href="/tools/us-address/"><span><span class="tl-name">US Test Address Generator →</span><span class="tl-desc">Generate fictional US addresses for form testing, with optional tax-free state filtering (AK, DE, MT, NH, OR).</span></span><span class="tl-go">Open</span></a>
+</div>
 <section class="tool-panel" id="utm"><h2>Campaign URL checker</h2><p>Paste a tagged destination URL to check source, medium, campaign and duplicate UTM fields.</p><label>Destination URL<input id="url" type="url" placeholder="https://example.com/?utm_source=…"></label><button id="check">Check tags</button><output id="tags" aria-live="polite"></output></section>
 <section class="tool-panel" id="keywords"><h2>Keyword match formatter</h2><label>Plain keywords, one per line<textarea id="words"></textarea></label><label>Match type <select id="match"><option>Exact</option><option>Phrase</option><option>Broad</option></select></label><button id="format">Format keywords</button><label>Formatted list (duplicates removed)<textarea readonly id="list"></textarea></label></section>
 <section class="tool-panel" id="purchase"><h2>Purchase field spot check</h2><p>Paste one JSON object and enter the field path for your platform or custom mapping. For example, use ecommerce.transaction_id for a data layer object with an ecommerce section. Check the path in your implementation first. This compares the captured payload only.</p><label>Captured JSON<textarea id="payload"></textarea></label><label>Field path <input id="path" placeholder="ecommerce.tax"></label><label>Expected JSON value <input id="expected" placeholder='0 or "USD"'></label><button id="compare">Compare field</button><output id="result" aria-live="polite"></output></section>
