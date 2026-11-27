@@ -91,10 +91,10 @@
     { src: '/img/aliens/cyborg-a.png', name: 'Unit-9' },
     { src: '/img/aliens/nebula-a.png', name: 'Nebula' },
     { src: '/img/aliens/human-b.png', name: 'Office Worker' },
-    { src: '/img/aliens/insect-b.png', name: 'Hive Worker' },
-    { src: '/img/aliens/desert-a.png', name: 'Sandstone' },
-    { src: '/img/aliens/deepsea-a.png', name: 'Angler' },
-    { src: '/img/aliens/deepsea-b.png', name: 'Jellyfish' }
+    { src: '/img/aliens/insect-b.png?v=4', name: 'Hive Worker' },
+    { src: '/img/aliens/desert-a.png?v=4', name: 'Sandstone' },
+    { src: '/img/aliens/deepsea-a.png?v=4', name: 'Angler' },
+    { src: '/img/aliens/deepsea-b.png?v=4', name: 'Jellyfish' }
   ];
 
   // ---------- helpers ----------
